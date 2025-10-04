@@ -9,7 +9,6 @@ from llama_index.core import (
     StorageContext,
     Settings
 )
-from llama_index.core.node_parser import SentenceSplitter
 from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core.postprocessor import SentenceTransformerRerank
@@ -22,7 +21,6 @@ def load_processed_papers():
     if not papers_file.exists():
         raise FileNotFoundError(
             "ERROR: Arquivo all_papers.json não encontrado!\n"
-            "Execute primeiro: python scripts/1_download_and_process.py"
         )
     
     with open(papers_file, 'r', encoding='utf-8') as f:
@@ -30,159 +28,132 @@ def load_processed_papers():
     
     return papers
 
-
 def create_llamaindex_documents(papers):
-    """
-    IMPROVEMENT #1: Section-Based Document Creation
-    Creates separate documents for each section to enable precise retrieval
-    """
+    """Converte papers em Documents do LlamaIndex"""
     
     documents = []
     
-    print("Creating section-based documents...")
+    print("Creating LlamaIndex documents...")
     
-    # Define sections with importance weights for re-ranking
-    section_configs = [
-        ('abstract', 1.0, True),      # weight, is_required
-        ('introduction', 0.7, False),
-        ('methods', 0.5, False),
-        ('results', 0.9, False),
-        ('discussion', 0.8, False),
-        ('conclusion', 0.95, False)
-    ]
-    
-    for paper in tqdm(papers, desc="Processing papers"):
-        paper_id = paper.get('id', f"paper_{len(documents)}")
+    for paper in tqdm(papers):
+        # Montar texto principal (priorizar conteúdo mais relevante)
+        text_parts = []
         
-        # Base metadata shared across all sections
-        base_metadata = {
-            'paper_id': paper_id,
-            'title': paper.get('title', 'Unknown Title'),
-            'authors': paper.get('authors', 'Unknown Authors'),
-            'year': str(paper.get('year', 'N/A')),
-            'journal': paper.get('journal', 'Unknown Journal'),
-            'keywords': paper.get('keywords', ''),
-            'pmc_link': paper.get('pmc_link', '')
+        # Título
+        if paper.get('title'):
+            text_parts.append(f"Title: {paper['title']}\n")
+        
+        # Abstract (muito importante!)
+        if paper.get('abstract'):
+            text_parts.append(f"Abstract: {paper['abstract']}\n")
+        
+        # Introduction
+        if paper.get('introduction'):
+            text_parts.append(f"Introduction: {paper['introduction']}\n")
+        
+        # Methods (resumido)
+        if paper.get('methods'):
+            text_parts.append(f"Methods: {paper['methods']}\n")
+        
+        # Results (muito importante!)
+        if paper.get('results'):
+            text_parts.append(f"Results: {paper['results']}\n")
+        
+        # Discussion
+        if paper.get('discussion'):
+            text_parts.append(f"Discussion: {paper['discussion']}\n")
+        
+        # Conclusion (importante!)
+        if paper.get('conclusion'):
+            text_parts.append(f"Conclusion: {paper['conclusion']}\n")
+        
+        # Se não tem seções, usa texto completo
+        if not any([paper.get('abstract'), paper.get('results'), paper.get('conclusion')]):
+            if paper.get('full_text'):
+                text_parts.append(paper['full_text'])
+        
+        main_text = '\n'.join(text_parts).strip()
+        
+        # Se mesmo assim não tem texto, pula
+        if not main_text or len(main_text) < 100:
+            print(f"WARNING: Skipping paper without sufficient text: {paper.get('id')}")
+            continue
+        
+        # Metadados
+        metadata = {
+            'paper_id': paper.get('id', ''),
+            'title': paper.get('title', ''),
+            'authors': paper.get('authors', '')[:500],
+            'year': paper.get('year', ''),
+            'journal': paper.get('journal', '')[:200],
+            'keywords': paper.get('keywords', '')[:300],
+            'pmc_link': paper.get('pmc_link', ''),
+            'has_abstract': bool(paper.get('abstract')),
+            'has_results': bool(paper.get('results')),
+            'has_conclusion': bool(paper.get('conclusion'))
         }
         
-        # Track if paper has any valid content
-        has_content = False
+        # Criar Document
+        doc = Document(
+            text=main_text,
+            metadata=metadata,
+            id_=paper.get('id', f"doc_{len(documents)}")
+        )
         
-        # Create document for each section
-        for section_name, weight, is_required in section_configs:
-            section_text = paper.get(section_name, '').strip()
-            
-            if not section_text or len(section_text) < 50:
-                continue
-            
-            has_content = True
-            
-            # Add section header for context
-            formatted_text = f"[{section_name.upper()}]\n"
-            formatted_text += f"Paper: {paper.get('title', 'Unknown')}\n\n"
-            formatted_text += section_text
-            
-            # Section-specific metadata
-            metadata = {
-                **base_metadata,
-                'section': section_name,
-                'section_weight': weight,
-                'text_length': len(section_text),
-                'is_main_content': section_name in ['abstract', 'results', 'conclusion']
-            }
-            
-            doc = Document(
-                text=formatted_text,
-                metadata=metadata,
-                id_=f"{paper_id}_{section_name}"
-            )
-            
-            documents.append(doc)
-        
-        # Fallback: if no sections found, use full_text
-        if not has_content and paper.get('full_text'):
-            full_text = paper['full_text'].strip()
-            if len(full_text) >= 100:
-                metadata = {
-                    **base_metadata,
-                    'section': 'full_text',
-                    'section_weight': 0.6,
-                    'text_length': len(full_text),
-                    'is_main_content': True
-                }
-                
-                doc = Document(
-                    text=full_text,
-                    metadata=metadata,
-                    id_=f"{paper_id}_full"
-                )
-                documents.append(doc)
+        documents.append(doc)
     
-    print(f"SUCCESS: {len(documents)} section documents created from {len(papers)} papers")
+    print(f"SUCCESS: {len(documents)} documents created")
     return documents
 
-
 def setup_llamaindex(documents):
-    """
-    IMPROVEMENT #2: Improved Chunking Strategy
-    Uses SentenceSplitter with optimized settings for scientific papers
-    """
+    """Configura e carrega no ChromaDB via LlamaIndex"""
     
     print("\nConfiguring ChromaDB...")
     
-    # ChromaDB setup
+    # ChromaDB
     db_path = Path('database/chroma_db')
     db_path.mkdir(parents=True, exist_ok=True)
     
     chroma_client = chromadb.PersistentClient(path=str(db_path))
     
-    # Delete old collection if exists
+    # Deletar collection antiga se existir
     try:
         chroma_client.delete_collection("nasa_bioscience")
         print("Old collection removed")
     except:
         pass
     
-    # Create new collection
+    # Criar nova collection
     collection = chroma_client.create_collection(
         name="nasa_bioscience",
         metadata={
-            "description": "NASA Space Bioscience Publications - Section-based chunking",
+            "description": "NASA Space Bioscience Publications - 608 papers",
             "hnsw:space": "cosine"
         }
     )
     
     print("\nConfiguring embedding model...")
     
-    # Embedding model
+    # Embedding model (local, gratuito!)
     embed_model = HuggingFaceEmbedding(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
-         # model_name="sentence-transformers/all-mpnet-base-v2"
-        device="cuda" #cuda for gpu or cpu for cpu
+        model_name="sentence-transformers/all-MiniLM-L6-v2",  # Mais rápido!
+        # model_name="sentence-transformers/all-mpnet-base-v2"  # Melhor, mas lento
+        device="cpu"  # Ou "cuda" se tiver GPU
     )
     
-    # IMPROVED CHUNKING: Sentence-aware splitting
-    text_splitter = SentenceSplitter(
-        chunk_size=512,           # Smaller chunks for precise retrieval
-        chunk_overlap=128,        # Larger overlap to preserve context
-        separator=" ",
-        paragraph_separator="\n\n"
-    )
-    
-    # Global settings
+    # Configurações globais
     Settings.embed_model = embed_model
-    Settings.text_splitter = text_splitter
-    Settings.chunk_size = 512
-    Settings.chunk_overlap = 128
+    Settings.chunk_size = 1024
+    Settings.chunk_overlap = 100
     
     print("Loading documents into ChromaDB...")
-    print("This may take several minutes...\n")
+    print("This may take several minutes depending on hardware...\n")
     
     # Vector Store
     vector_store = ChromaVectorStore(chroma_collection=collection)
     storage_context = StorageContext.from_defaults(vector_store=vector_store)
     
-    # Create index
+    # Criar index (isso processa embeddings e salva no ChromaDB)
     index = VectorStoreIndex.from_documents(
         documents,
         storage_context=storage_context,
@@ -193,144 +164,104 @@ def setup_llamaindex(documents):
     
     return index, collection
 
-
-def create_query_engine(index):
-    """
-    IMPROVEMENT #3: Custom Query Engine with Re-ranking
-    Uses cross-encoder to re-rank results based on semantic relevance
-    """
+def create_query_engine_with_reranking(index):
+    """Creates query engine with cross-encoder re-ranking for better precision"""
     
     print("\nConfiguring query engine with re-ranking...")
     
-    # Re-ranking using cross-encoder for better precision
+    # Re-ranking using cross-encoder
     rerank = SentenceTransformerRerank(
         model="cross-encoder/ms-marco-MiniLM-L-2-v2",
         top_n=5  # Final number of results after re-ranking
     )
     
     query_engine = index.as_query_engine(
-        similarity_top_k=15,  # Get more candidates initially
+        similarity_top_k=10,  # Get more candidates initially
         node_postprocessors=[rerank],
-        response_mode="compact"  # Efficient response generation
+        response_mode="compact"
     )
     
-    print("Query engine configured successfully")
+    print("Query engine with re-ranking configured successfully")
     
     return query_engine
 
-
-def query_with_sources(query_engine, query_text, show_chunks=True):
-    """
-    IMPROVEMENT #4: Enhanced Retrieval with Source Tracking
-    Detailed source attribution showing which chunks contributed to response
-    """
+def test_queries(index):
+    """Testa o sistema com queries de exemplo"""
     
-    print(f"\n{'='*80}")
-    print(f"QUERY: {query_text}")
-    print(f"{'='*80}\n")
+    print("\n" + "=" * 70)
+    print("TESTING QUERIES WITH RE-RANKING")
+    print("=" * 70)
     
-    response = query_engine.query(query_text)
-    
-    print("RESPONSE:")
-    print("-" * 80)
-    print(response.response)
-    print()
-    
-    print(f"{'='*80}")
-    print(f"SOURCE CHUNKS ({len(response.source_nodes)} results):")
-    print(f"{'='*80}\n")
-    
-    for i, node in enumerate(response.source_nodes, 1):
-        meta = node.node.metadata
-        score = node.score if hasattr(node, 'score') else 'N/A'
-        
-        # Header with metadata
-        print(f"[{i}] {meta.get('title', 'Unknown')[:70]}...")
-        print(f"    Section: {meta.get('section', 'unknown').upper()} | "
-              f"Score: {score:.4f} | "
-              f"Year: {meta.get('year', 'N/A')} | "
-              f"Weight: {meta.get('section_weight', 'N/A')}")
-        
-        if meta.get('pmc_link'):
-            print(f"    Link: {meta['pmc_link']}")
-        
-        # Show chunk text if requested
-        if show_chunks:
-            chunk_text = node.node.text.replace('\n', ' ')
-            print(f"    Preview: {chunk_text}...")
-        
-        print()
-    
-    return response
-
-
-def test_queries(query_engine):
-    """Test the system with example queries"""
-    
-    print("\n" + "="*80)
-    print("TESTING ENHANCED RETRIEVAL SYSTEM")
-    print("="*80)
+    # Use query engine with re-ranking
+    query_engine = create_query_engine_with_reranking(index)
     
     test_queries_list = [
-        "What are the main effects of microgravity on bone density in mice?",
-        "How does space radiation affect immune system function?",
-        "What challenges exist for long-duration spaceflight?",
-        "Describe findings about muscle atrophy in space missions"
+        "What are the main effects of microgravity on human health?",
+        "How does space radiation affect biological systems?",
+        "What challenges exist for growing plants in space?",
+        "What are the key findings about bone loss in space?"
     ]
     
-    for query in test_queries_list:
-        query_with_sources(query_engine, query, show_chunks=True)
-        print("\n" + "-"*80 + "\n")
-
+    for i, query in enumerate(test_queries_list, 1):
+        print(f"\n{'-' * 70}")
+        print(f"Query {i}: {query}")
+        print('-' * 70)
+        
+        response = query_engine.query(query)
+        
+        print(f"\nResponse:")
+        print(str(response)[:500] + "..." if len(str(response)) > 500 else str(response))
+        
+        print(f"\nRelevant papers ({len(response.source_nodes)} results):")
+        for j, node in enumerate(response.source_nodes, 1):
+            meta = node.node.metadata
+            score = node.score if hasattr(node, 'score') else 'N/A'
+            print(f"  {j}. {meta.get('title', 'N/A')[:80]}...")
+            print(f"     Score: {score:.4f} | Year: {meta.get('year', 'N/A')}")
 
 def main():
-    print("="*80)
-    print("NASA BIOSCIENCE - ENHANCED EMBEDDING SYSTEM")
-    print("="*80)
+    print("=" * 70)
+    print("NASA BIOSCIENCE - LOADING TO CHROMADB + LLAMAINDEX")
+    print("=" * 70)
     
     try:
-        # 1. Load papers
+        # 1. Carregar papers processados
         print("\nLoading processed papers...")
         papers = load_processed_papers()
         print(f"SUCCESS: {len(papers)} papers loaded")
         
-        # 2. Create section-based documents
+        # 2. Criar Documents
         documents = create_llamaindex_documents(papers)
         
         if not documents:
             print("ERROR: No valid documents found!")
             return
         
-        # 3. Setup with improved chunking
+        # 3. Setup LlamaIndex + ChromaDB
         index, collection = setup_llamaindex(documents)
         
-        # 4. Create query engine with re-ranking
-        query_engine = create_query_engine(index)
-        
-        # 5. Verify
+        # 4. Verificar
         count = collection.count()
         print(f"\nTotal chunks in ChromaDB: {count}")
         
-        # 6. Test with enhanced retrieval
-        test_queries(query_engine)
+        # 5. Testar com re-ranking
+        test_queries(index)
         
-        # Summary
-        print("\n" + "="*80)
+        print("\n" + "=" * 70)
         print("PROCESS COMPLETED SUCCESSFULLY!")
-        print("="*80)
+        print("=" * 70)
         print(f"Database: {Path('database/chroma_db').absolute()}")
-        print(f"Original papers: {len(papers)}")
-        print(f"Section documents: {len(documents)}")
-        print(f"Total chunks: {count}")
+        print(f"Papers: {len(papers)}")
+        print(f"Documents: {len(documents)}")
+        print(f"Chunks: {count}")
         print(f"Chunks per document: ~{count/len(documents):.1f}")
-        print("\nSystem ready for queries!")
-        print("="*80)
+        print("\nNext step: Create interactive graph!")
+        print("=" * 70)
         
     except Exception as e:
         print(f"\nERROR: {e}")
         import traceback
         traceback.print_exc()
-
 
 if __name__ == "__main__":
     main()
