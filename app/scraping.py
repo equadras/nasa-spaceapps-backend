@@ -94,7 +94,7 @@ def fetch_paper_from_ncbi_api(pmc_id, retries=3):
             abstract_elem = article.find('.//abstract')
             if abstract_elem is not None:
                 abstract_text = ' '.join(abstract_elem.itertext())
-                paper_data['abstract'] = abstract_text.strip()[:5000]
+                paper_data['abstract'] = abstract_text.strip()
             else:
                 paper_data['abstract'] = ''
             
@@ -125,19 +125,19 @@ def fetch_paper_from_ncbi_api(pmc_id, retries=3):
                         section_text = ' '.join(sec.itertext()).strip()
                         
                         if 'introduction' in title_text:
-                            sections['introduction'] = section_text[:3000]
+                            sections['introduction'] = section_text
                         elif 'method' in title_text or 'material' in title_text:
-                            sections['methods'] = section_text[:3000]
+                            sections['methods'] = section_text
                         elif 'result' in title_text:
-                            sections['results'] = section_text[:4000]
+                            sections['results'] = section_text
                         elif 'discussion' in title_text:
-                            sections['discussion'] = section_text[:3000]
+                            sections['discussion'] = section_text
                         elif 'conclusion' in title_text:
-                            sections['conclusion'] = section_text[:2000]
+                            sections['conclusion'] = section_text
                 
                 # Texto completo do body
                 full_body = ' '.join(body.itertext()).strip()
-                paper_data['full_text'] = full_body[:20000]
+                paper_data['full_text'] = full_body
             else:
                 paper_data['full_text'] = ''
             
