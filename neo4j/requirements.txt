@@ -1,0 +1,4 @@
+llama-index
+llama-index-llms-google-genai	
+pyvis
+networkx
