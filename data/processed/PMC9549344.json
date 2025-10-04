@@ -1,0 +1,16 @@
+{
+  "id": "PMC9549344",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9549344/",
+  "title": "A Region of UNC-89 (obscurin) Lying Between Two Protein Kinase Domains is a Highly Elastic Spring Required for Proper Sarcomere Organization",
+  "authors": "Hiroshi Qadota, Jasmine C. Moody, Leila Lesanpezeshki, Taylor Moncrief, Deborah Kitzler, Purnima Devaki Bhat, Siva A. Vanapalli, Andres F. Oberhauser, Guy M. Benian",
+  "year": "2020",
+  "journal": "Journal of molecular biology",
+  "abstract": "In  C. elegans ,  unc-89  encodes a set of giant multi-domain proteins (up 8,081 residues) localized to the M-lines of muscle sarcomeres and required for normal sarcomere organization and whole-animal locomotion. Multiple UNC-89 isoforms contain two protein kinase domains. There is conservation in arrangement of domains between UNC-89 and its two mammalian homologs, obscurin and SPEG: kinase, a non-domain region of 647–742 residues, Ig domain, Fn3 domain and a second kinase domain. In all three proteins, this non-domain “interkinase region” has low sequence complexity, high proline content and lacks predicted secondary structure. We report that a major portion of this interkinase (571 residues out of 647 residues) when examined by single molecule force spectroscopy  in vitro  displays the properties of a random coil and acts as an entropic spring. We used CRISPR/Cas9 to create nematodes carrying an in-frame deletion of the same 571-residue portion of the interkinase. These animals display severe disorganization of all portions of the sarcomere in body wall muscle. Super-resolution microscopy reveals extra, short-A-bands lying close to the outer muscle cell membrane and between normally spaced A-bands. Nematodes with this in-frame deletion show defective locomotion and muscle force generation. We designed our CRISPR-generated in-frame deletion to contain an HA tag at the N-terminus of the large UNC-89 isoforms. This HA tag results in normal organization of body wall muscle, but approximately half the normal levels of the giant UNC-89 isoforms, dis-organization of pharyngeal muscle, small body size, and reduced muscle force, likely due to poor nutritional uptake.",
+  "keywords": "sarcomere, giant polypeptides, UNC-89, obscurin",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

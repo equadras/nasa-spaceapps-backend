@@ -9,7 +9,6 @@ import json
 import time
 from tqdm import tqdm
 import re
-import xmltodict
 from xml.etree import ElementTree as ET
 
 CSV_URL = "https://raw.githubusercontent.com/jgalazka/SB_publications/main/SB_publication_PMC.csv"
@@ -49,8 +48,6 @@ def fetch_paper_from_ncbi_api(pmc_id, retries=3):
             
             response = requests.get(url, params=params, timeout=30)
             response.raise_for_status()
-
-            xml_content = response.read()
             
             # Parse XML
             root = ET.fromstring(response.content)

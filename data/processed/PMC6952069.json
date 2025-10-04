@@ -1,0 +1,16 @@
+{
+  "id": "PMC6952069",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6952069/",
+  "title": "MetaMiner: A Scalable Peptidogenomics Approach for Discovery of Ribosomal Peptide Natural Products with Blind Modifications from Microbial Communities",
+  "authors": "Liu Cao, Alexey Gurevich, Kelsey L. Alexander, C. Benjamin Naman, Tiago Leão, Evgenia Glukhov, Tal Luzzatto-Knaan, Fernando Vargas, Robby Quinn, Amina Bouslimani, Louis Felix Nothias, Nitin K. Singh, Jon G. Sanders, Rodolfo A. S. Benitez, Luke R. Thompson, Md-Nafiz Hamid, James T. Morton, Alla Mikheenko, Alexander Shlemov, Anton Korobeynikov, Iddo Friedberg, Rob Knight, Kasthuri Venkateswaran, William H. Gerwick, Lena Gerwick, Pieter C. Dorrestein, Pavel A. Pevzner, Hosein Mohimani",
+  "year": "2019",
+  "journal": "Cell systems",
+  "abstract": "Summary Ribosomally synthesized and post-translationally modified peptides (RiPPs) are an important class of natural products that contain antibiotics and a variety of other bioactive compounds. The existing methods for discovery of RiPPs by combining genome mining and computational mass spectrometry are limited to discovering specific classes of RiPPs from small datasets, and they fail to handle unknown post-translational modifications. We present MetaMiner, a software tool for addressing these challenges that is compatible with large-scale screening platforms for natural product discovery. After searching millions of spectra in the Global Natural Products Social (GNPS) molecular networking infrastructure against just eight genomic and metagenomic datasets, MetaMiner discovered 31 known and seven unknown RiPPs from diverse microbial communities including human microbiome, lichen microbiome, and micro-organisms isolated from the International Space Station.",
+  "keywords": "Ribosomally synthesized and post-translationally modified peptides, computational mass spectrometry, metagenomics, natural products discovery, microbial metabolites",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

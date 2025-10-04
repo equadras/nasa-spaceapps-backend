@@ -1,0 +1,16 @@
+{
+  "id": "PMC2897429",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2897429/",
+  "title": "New Device for High-Throughput Viability Screening of Flow Biofilms ",
+  "authors": "Michael R. Benoit, Carolyn G. Conant, Cristian Ionescu-Zanetti, Michael Schwartz, A. Matin",
+  "year": "2010",
+  "journal": "Applied and Environmental Microbiology",
+  "abstract": "Control of biofilms requires rapid methods to identify compounds effective against them and to isolate resistance-compromised mutants for identifying genes involved in enhanced biofilm resistance. While rapid screening methods for microtiter plate well (“static”) biofilms are available, there are no methods for such screening of continuous flow biofilms (“flow biofilms”). Since the latter biofilms more closely approximate natural biofilms, development of a high-throughput (HTP) method for screening them is desirable. We describe here a new method using a device comprised of microfluidic channels and a distributed pneumatic pump (BioFlux) that provides fluid flow to 96 individual biofilms. This device allows fine control of continuous or intermittent fluid flow over a broad range of flow rates, and the use of a standard well plate format provides compatibility with plate readers. We show that use of green fluorescent protein (GFP)-expressing bacteria, staining with propidium iodide, and measurement of fluorescence with a plate reader permit rapid and accurate determination of biofilm viability. The biofilm viability measured with the plate reader agreed with that determined using plate counts, as well as with the results of fluorescence microscope image analysis. Using BioFlux and the plate reader, we were able to rapidly screen the effects of several antimicrobials on the viability of  Pseudomonas aeruginosa  PAO1 flow biofilms.",
+  "keywords": "",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

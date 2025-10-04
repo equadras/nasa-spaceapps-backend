@@ -1,0 +1,16 @@
+{
+  "id": "PMC3593973",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3593973/",
+  "title": "Chimeras reveal a single lipid-interface residue that controls MscL channel kinetics as well as mechanosensitivity",
+  "authors": "Li-Min Yang, Dalian Zhong, Paul Blount",
+  "year": "2013",
+  "journal": "Cell reports",
+  "abstract": "Summary MscL, the highly conserved bacterial mechanosensitive channel of large conductance, functionally serves as an osmotic “emergency release valve”, is among the best studied mechanosensors and a paradigm of how a channel senses and responds to membrane tension. While all homologues tested thus far encode channel activity, many show functional differences. Here we tested  E. coli  and  S aureus  chimeras and find that the periplasmic region of the protein, particularly  E. coli  I49 and the equivalent  S aureus  F47 at the periplasmic lipid-aqueous interface of the first transmembrane domain, drastically influences both the open dwell time and threshold of channel opening. One mutant shows a severe hysteresis, confirming the importance of this residue in determining the energy barriers for channel gating. We propose that this site acts similar to a spring for a clasp knife, adjusting the resistance for obtaining and stabilizing an open or closed channel structure.",
+  "keywords": "mechanosensitive channel, channel kinetics, osmoregulation, protein-lipid interactions",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

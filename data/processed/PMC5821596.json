@@ -1,0 +1,16 @@
+{
+  "id": "PMC5821596",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5821596/",
+  "title": "Comparative transcriptomics indicate changes in cell wall organization and stress response in seedlings during spaceflight",
+  "authors": "Christina M. Johnson, Aswati Subramanian, Sivakumar Pattathil, Melanie J. Correll, John Z. Kiss",
+  "year": "2017",
+  "journal": "American journal of botany",
+  "abstract": "PREMISE OF THE STUDY Plants will play an important role in the future of space exploration as part of bioregenerative life support. Thus, it is important to understand the effects of microgravity and spaceflight on gene expression in plant development. METHODS We analyzed the transcriptome of  Arabidopsis thaliana  using the Biological Research in Canisters (BRIC) hardware during Space Shuttle mission STS-131. The bioinformatics methods used included RMA (robust multi-array average), MAS5 (Microarray Suite 5.0), and PLIER (probe logarithmic intensity error estimation). Glycome profiling was used to analyze cell wall composition in the samples. In addition, our results were compared to those of two other groups using the same hardware on the same mission (BRIC-16). KEY RESULTS In our BRIC-16 experiments, we noted expression changes in genes involved in hypoxia and heat shock responses, DNA repair, and cell wall structure between spaceflight samples compared to the ground controls. In addition, glycome profiling supported our expression analyses in that there was a difference in cell wall components between ground control and spaceflight-grown plants. Comparing our studies to those of the other BRIC-16 experiments demonstrated that, even with the same hardware and similar biological materials, differences in results in gene expression were found among these spaceflight experiments. C ONCLUSIONS A common theme from our BRIC-16 space experiments and those of the other two groups was the downregulation of water stress response genes in spaceflight. In addition, all three studies found differential regulation of genes associated with cell wall remodeling and stress responses between spaceflight-grown and ground control plants.",
+  "keywords": "cell wall, cytoskeleton, dehydration, glycome profiling, transcriptome, heat shock, XERO1, FH2, AGP, XTH",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

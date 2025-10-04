@@ -1,0 +1,16 @@
+{
+  "id": "PMC3981873",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3981873/",
+  "title": "INTER-REGULATION OF THE UNFOLDED PROTEIN RESPONSE AND AUXIN SIGNALING",
+  "authors": "Yani Chen, Kyaw Aung, Jakub Rolčík, Kathryn Walicki, Jiří Friml, Federica Brandizzi",
+  "year": "2013",
+  "journal": "The Plant journal : for cell and molecular biology",
+  "abstract": "SUMMARY The unfolded protein response (UPR) is a signaling network triggered by overload of protein-folding demand in the endoplasmic reticulum (ER), a condition termed ER stress. The UPR is critical for growth and development; nonetheless, connections between the UPR and other cellular regulatory processes remain largely unknown. Here, we identify a link between the UPR and the phytohormone auxin, a master regulator of plant physiology. We show that ER stress triggers down-regulation of auxin sensors and transporters in  Arabidopsis thaliana . We also demonstrate that an  Arabidopsis  mutant of a conserved ER stress sensor IRE1 exhibits defects in the auxin response and levels. These data not only support that the plant IRE1 is required for auxin homeostasis, they also reveal a species-specific feature of IRE1 in multicellular eukaryotes. Furthermore, by establishing that UPR activation is reduced in mutants of ER-localized auxin transporters, including PIN5, we define a long-neglected biological significance of ER-based auxin regulation. We further examine the functional relationship of IRE1 and PIN5 by showing that an  ire1 pin5  triple mutant enhances defects of UPR activation and auxin homeostasis in  ire1  or  pin5 . Our results imply that the plant UPR has evolved a hormone-dependent strategy for coordinating ER function with physiological processes.",
+  "keywords": "ER stress, unfolded protein response, auxin response, IRE1, PIN5",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

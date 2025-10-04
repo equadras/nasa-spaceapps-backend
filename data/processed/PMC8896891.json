@@ -1,0 +1,16 @@
+{
+  "id": "PMC8896891",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8896891/",
+  "title": "The interaction of vortical flows with red cells in venous valve mimics",
+  "authors": "Zyrina Alura C. Sanchez, Vignesha Vijayananda, Devin M. Virassammy, Liat Rosenfeld, Anand K. Ramasubramanian",
+  "year": "2022",
+  "journal": "Biomicrofluidics",
+  "abstract": "The motion of cells orthogonal to the direction of main flow is of importance in natural and engineered systems. The lateral movement of red blood cells (RBCs) distal to sudden expansion is considered to influence the formation and progression of thrombosis in venous valves, aortic aneurysms, and blood-circulating devices and is also a determining parameter for cell separation applications in flow-focusing microfluidic devices. Although it is known that the unique geometry of venous valves alters the blood flow patterns and cell distribution in venous valve sinuses, the interactions between fluid flow and RBCs have not been elucidated. Here, using a dilute cell suspension in an  in vitro  microfluidic model of a venous valve, we quantified the spatial distribution of RBCs by microscopy and image analysis, and using micro-particle image velocimetry and 3D computational fluid dynamics simulations, we analyzed the complex flow patterns. The results show that the local hematocrit in the valve pockets is spatially heterogeneous and is significantly different from the feed hematocrit. Above a threshold shear rate, the inertial separation of streamlines and lift forces contribute to an uneven distribution of RBCs in the vortices, the entrapment of RBCs in the vortices, and non-monotonic wall shear stresses in the valve pockets. Our experimental and computational characterization provides insights into the complex interactions between fluid flow, RBC distribution, and wall shear rates in venous valve mimics, which is of relevance to understanding the pathophysiology of thrombosis and improving cell separation efficiency.",
+  "keywords": "",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

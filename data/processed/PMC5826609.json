@@ -1,0 +1,16 @@
+{
+  "id": "PMC5826609",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5826609/",
+  "title": "Effects of spaceflight on the immunoglobulin repertoire of unimmunized C57BL/6 mice",
+  "authors": "Claire Ward, Trisha A. Rettig, Savannah Hlavacek, Bailey A. Bye, Michael J. Pecaut, Stephen K. Chapes",
+  "year": "2017",
+  "journal": "Life sciences in space research",
+  "abstract": "Spaceflight has been shown to suppress the adaptive immune response, altering the distribution and function of lymphocyte populations. B lymphocytes express highly specific and highly diversified receptors, known as immunoglobulins (Ig), that directly bind and neutralize pathogens. Ig diversity is achieved through the enzymatic splicing of gene segments within the genomic DNA of each B cell in a host. The collection of Ig specificities within a host, or Ig repertoire, has been increasingly characterized in both basic research and clinical settings using high-throughput sequencing technology (HTS). We utilized HTS to test the hypothesis that spaceflight affects the B-cell repertoire. To test this hypothesis, we characterized the impact of spaceflight on the unimmunized Ig repertoire of C57BL/6 mice that were flown aboard the International Space Station (ISS) during the Rodent Research One validation flight in comparison to ground controls. Individual gene segment usage was similar between ground control and flight animals, however, gene segment combinations and the junctions in which gene segments combine was varied among animals within and between treatment groups. We also found that spontaneous somatic mutations in the IgH and Igκ gene loci were not increased. These data suggest that space flight did not affect the B cell repertoire of mice flown and housed on the ISS over a short period of time.",
+  "keywords": "Immunoglobulin Gene Use, Next Generation Sequencing, Bioinformatics",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

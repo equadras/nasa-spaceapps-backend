@@ -1,0 +1,16 @@
+{
+  "id": "PMC3508904",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3508904/",
+  "title": "The dynamics of protein-protein interactions between domains of MscL at the cytoplasmic-lipid interface",
+  "authors": "Irene Iscla, Robin Wray, Paul Blount",
+  "year": "2012",
+  "journal": "Channels",
+  "abstract": "The bacterial mechanosensitive channel of large conductance, MscL, is one of the best characterized mechanosensitive channels serving as a paradigm for how proteins can sense and transduce mechanical forces. The physiological role of MscL is that of an emergency release valve that opens a large pore upon a sudden drop in the osmolarity of the environment. A crystal structure of a closed state of MscL shows it as a homopentamer, with each subunit consisting of two transmembrane domains (TM). There is consensus that the TM helices move in an iris like manner tilting in the plane of the membrane while gating. An N-terminal amphipathic helix that lies along the cytoplasmic membrane (S1), and the portion of TM2 near the cytoplasmic interface (TM2 ci ), are relatively close in the crystal structure, yet predicted to be dynamic upon gating. Here we determine how these two regions interact in the channel complex, and study how these interactions change as the channel opens. We have screened 143 double-cysteine mutants of  E. coli  MscL for their efficiency in disulfide bridging and generated a map of protein-protein interactions between these two regions. Interesting candidates have been further studied by patch clamp and show differences in channel activity under different redox potentials; the results suggest a model for the dynamics of these two domains during MscL gating.",
+  "keywords": "mechanosensitive channel, MscL, disulfide trapping, protein-protein interactions, osmoregulation",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

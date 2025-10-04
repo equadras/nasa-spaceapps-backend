@@ -1,0 +1,16 @@
+{
+  "id": "PMC3457586",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3457586/",
+  "title": "Identification of Critical Host Mitochondrion-Associated Genes during ",
+  "authors": "Tonia Von Ohlen, Alison Luce-Fedrow, M. Teresa Ortega, Roman R. Ganta, Stephen K. Chapes",
+  "year": "2012",
+  "journal": "Infection and Immunity",
+  "abstract": "Ehrlichia chaffeensis  is an obligate intracellular bacterium that causes human monocytic ehrlichiosis (HME). To determine what host components are important for bacterial replication, we performed microarray analysis on  Drosophila melanogaster  S2 cells by comparing host gene transcript levels between permissive and nonpermissive conditions for  E. chaffeensis  growth. Five-hundred twenty-seven genes had increased transcript levels unique to permissive growth conditions 24 h postinfection. We screened adult flies that were mutants for several of the “permissive” genes for the ability to support  Ehrlichia  replication. Three additional  D. melanogaster  fly lines with putative mutations in pyrimidine metabolism were also tested. Ten fly lines carrying mutations in the genes  CG6479 ,  separation anxiety ,  chitinase 11 ,  CG6364  ( Uck2 ),  CG6543  ( Echs1 ),  withered  ( whd ),  CG15881  ( Ccdc58 ),  CG14806  ( Apop1 ),  CG11875  ( Nup37 ), and  dumpy  ( dp ) had increased resistance to infection with  Ehrlichia . Analysis of RNA by quantitative real-time reverse transcription-PCR (qRT-PCR) confirmed that the bacterial load was decreased in these mutant flies compared to wild-type infected control flies. Seven of these genes ( san ,  Cht11 ,  Uck2 ,  Echs1 ,  whd , C cdc58 , and  Apop1 ) encoded proteins that had mitochondrial functions or could be associated with proteins with mitochondrial functions. Treatment of THP-1 cells with double-stranded RNA to silence the human  UCK2  gene indicates that the disruption of the uridine-cytidine kinase affects  E. chaffeensis  replication in human macrophages. Experiments with cyclopentenyl cytosine (CPEC), a CTP synthetase inhibitor and cytosine, suggest that the nucleotide salvage pathway is essential for  E. chaffeensis  replication and that it may be important for the provision of CTP, uridine, and cytidine nucleotides.",
+  "keywords": "",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

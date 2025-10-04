@@ -1,0 +1,16 @@
+{
+  "id": "PMC5736159",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5736159/",
+  "title": "Validation of Methods to Assess the Immunoglobulin Gene Repertoire in Tissues Obtained from Mice on the International Space Station",
+  "authors": "Trisha A Rettig, Claire Ward, Michael J Pecaut, Stephen K. Chapes",
+  "year": "2017",
+  "journal": "Gravitational and space research : publication of the American Society for Gravitational and Space Research",
+  "abstract": "Spaceflight is known to affect immune cell populations. In particular, splenic B cell numbers decrease during spaceflight and in ground-based physiological models. Although antibody isotype changes have been assessed during and after space flight, an extensive characterization of the impact of spaceflight on antibody composition has not been conducted in mice. Next Generation Sequencing and bioinformatic tools are now available to assess antibody repertoires. We can now identify immunoglobulin gene- segment usage, junctional regions, and modifications that contribute to specificity and diversity. Due to limitations on the International Space Station, alternate sample collection and storage methods must be employed. Our group compared Illumina MiSeq sequencing data from multiple sample preparation methods in normal C57Bl/6J mice to validate that sample preparation and storage would not bias the outcome of antibody repertoire characterization. In this report, we also compared sequencing techniques and a bioinformatic workflow on the data output when we assessed the IgH and Igκ variable gene usage. This included assessments of our bioinformatic workflow on Illumina HiSeq and MiSeq datasets and is specifically designed to reduce bias, capture the most information from Ig sequences, and produce a data set that provides other data mining options. We validated our workflow by comparing our normal mouse MiSeq data to existing murine antibody repertoire studies validating it for future antibody repertoire studies.",
+  "keywords": "Immunoglobulin Gene Use, Next Generation Sequencing, Bioinformatics",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

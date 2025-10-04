@@ -1,0 +1,16 @@
+{
+  "id": "PMC6366624",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6366624/",
+  "title": "A comparison of unamplified and massively multiplexed PCR amplification for murine antibody repertoire sequencing",
+  "authors": "Trisha A. Rettig, Michael J. Pecaut, Stephen K. Chapes",
+  "year": "2018",
+  "journal": "FASEB bioAdvances",
+  "abstract": "Sequencing antibody repertoires has steadily become cheaper and easier. Sequencing methods usually rely on some form of amplification, often a massively multiplexed PCR prior to sequencing. To eliminate potential biases and create a data set that could be used for other studies, our lab compared unamplified sequencing results from the splenic heavy-chain repertoire in the mouse to those processed through two commercial applications. We also compared the use of mRNA vs total RNA, reverse transcriptase, and primer usage for cDNA synthesis and submission. The use of mRNA for cDNA synthesis resulted in higher read counts but reverse transcriptase and primer usage had no statistical effects on read count. Although most of the amplified data sets contained more antibody reads than the unamplified data set, we detected more unique V-gene segments in the unamplified data set. Although unique CDR3 detection was much lower in the unamplified data set, RNASeq detected 98% of the high frequency CDR3s. We have shown that unamplified profiling of the antibody repertoire is possible, detects more V-gene segments, and detects high frequency clones in the repertoire.",
+  "keywords": "High throughput sequencing, Immunoglobulin genes, Mouse, Heavy Chain, RepSEQ",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

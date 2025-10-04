@@ -1,0 +1,16 @@
+{
+  "id": "PMC3289768",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3289768/",
+  "title": "Three Routes to Modulate the Pore Size of the MscL Channel/Nanovalve",
+  "authors": "Li-Min Yang, Robin Wray, Juandell Parker, Danyell Wilson, Randolph S. Duran, Paul Blount",
+  "year": "2012",
+  "journal": "ACS Nano",
+  "abstract": "MscL is a bacterial mechanosensitive channel that protects cells from lysis upon acute decrease in external osmotic environment. It is one of the best characterized mechanosensors known, thus serving as a paradigm of how such molecules sense and respond to stimuli. In addition, the fact that it can be genetically modified, expressed, isolated, and manipulated has led to its proposed use as a triggered nanovalve for various functions including sensors within microelectronic array chips, as well as vesicular-based targeted drug release. X-ray crystallography reveals a homo-pentameric complex with each subunit containing two transmembrane α-helices (TM1 and TM2) and a single carboxyl terminal α-helix arranging within the complex to form a five-fold cytoplasmic bundle (CB), whose function and stability remain unclear. In this study, we show three routes that throttle the open channel conductance. When the linker between the TM2 and CB domain is shortened by deletions or constrained by either cross linking or heavy metal coordination, the conductance of the channel is reduced; in later two cases, even reversibly. While having implications for the stability of the CB, these data also provide routes for engineering MscL sensors that are more versatile for potential nanotech devices.",
+  "keywords": "Osmoregulation, Conductance, Nanopore, Biosensor, Drug-release device",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

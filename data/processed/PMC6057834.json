@@ -1,0 +1,16 @@
+{
+  "id": "PMC6057834",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6057834/",
+  "title": "NemaFlex: A microfluidics-based technology for standardized measurement of muscular strength of ",
+  "authors": "Mizanur Rahman, Jennifer E. Hewitt, Frank Van-Bussel, Hunter Edwards, Jerzy Blawzdziewicz, Nathaniel J. Szewczyk, Monica Driscoll, Siva A. Vanapalli",
+  "year": "2018",
+  "journal": "Lab on a chip",
+  "abstract": "Muscle strength is a functional measure of quality of life in humans. Declines in muscle strength are manifested in diseases as well as during inactivity, aging, and space travel. With conserved muscle biology, the simple genetic model  C. elegans  is a high throughput platform in which to identify molecular mechanisms causing muscle strength loss and to develop interventions based on diet, exercise, and drugs. In the clinic, standardized strength measures are essential to quantitate changes in patients; however, analogous standards have not been recapitulated in the  C. elegans  model since force generation fluctuates based on animal behavior and locomotion. Here, we report a microfluidics-based system for strength measurement that we call ‘NemaFlex’, based on pillar deflection as the nematode crawls through a forest of pillars. We have optimized the micropillar forest design and identified robust measurement conditions that yield a measure of strength that is independent of behavior and gait. Validation studies using a muscle contracting agent and mutants confirm that NemaFlex can reliably score muscular strength in  C. elegans . Additionally, we report a scaling factor to account for animal size that is consistent with a biomechanics model and enables comparative strength studies of mutants. Taken together, our findings anchor NemaFlex for applications in genetic and drug screens, for defining molecular and cellular circuits of neuromuscular function, and for dissection of degenerative processes in disuse, aging, and disease.",
+  "keywords": "",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

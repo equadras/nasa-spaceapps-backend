@@ -1,0 +1,16 @@
+{
+  "id": "PMC3838407",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3838407/",
+  "title": "Microfluidics-enabled method to identify modes of ",
+  "authors": "Roy Lycke, Archana Parashar, Santosh Pandey",
+  "year": "2013",
+  "journal": "Biomicrofluidics",
+  "abstract": "The discovery of new drugs is often propelled by the increasing resistance of parasites to existing drugs and the availability of better technology platforms. The area of microfluidics has provided devices for faster screening of compounds, controlled sampling/sorting of whole animals, and automated behavioral pattern recognition. In most microfluidic devices, drug effects on small animals (e.g.,  Caenorhabditis elegans ) are quantified by an end-point, dose response curve representing a single parameter (such as worm velocity or stroke frequency). Here, we present a multi-parameter extraction method to characterize modes of paralysis in  C. elegans  over an extended time period. A microfluidic device with real-time imaging is used to expose  C. elegans  to four anthelmintic drugs (i.e., pyrantel, levamisole, tribendimidine, and methyridine). We quantified worm behavior with parameters such as curls per second, types of paralyzation, mode frequency, and number/duration of active/immobilization periods. Each drug was chosen at EC 75  where 75% of the worm population is responsive to the drug. At equipotent concentrations, we observed differences in the manner with which worms paralyzed in drug environments. Our study highlights the need for assaying drug effects on small animal models with multiple parameters quantified at regular time points over an extended period to adequately capture the resistance and adaptability in chemical environments.",
+  "keywords": "",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

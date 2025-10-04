@@ -1,0 +1,16 @@
+{
+  "id": "PMC7870178",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7870178/",
+  "title": "Comprehensive Multi-Omics Analysis Reveals Mitochondrial Stress as a Central Biological Hub for Spaceflight Impact",
+  "authors": "Willian A. da Silveira, Hossein Fazelinia, Sara Brin Rosenthal, Evagelia C. Laiakis, Man S Kim, Cem Meydan, Yared Kidane, Komal S. Rathi, Scott M. Smith, Benjamin Stear, Yue Ying, Yuanchao Zhang, Jonathan Foox, Susana Zanello, Brian Crucian, Dong Wang, Adrienne Nugent, Helio A. Costa, Sara R. Zwart, Sonja Schrepfer, R. A. Leo Elworth, Nicolae Sapoval, Todd Treangen, Matthew MacKay, Nandan S. Gokhale, Stacy M. Horner, Larry N. Singh, Douglas C. Wallace, Jeffrey S. Willey, Jonathan C. Schisler, Robert Meller, J. Tyson McDonald, Kathleen M. Fisch, Gary Hardiman, Deanne Taylor, Christopher E. Mason, Sylvain V. Costes, Afshin Beheshti",
+  "year": "2020",
+  "journal": "Cell",
+  "abstract": "Summary Spaceflight is known to impose changes on human physiology with unknown molecular etiologies. To reveal these causes, we used a multi-omics, systems biology analytical approach using biomedical profiles from fifty-nine astronauts and data from NASA’s GeneLab derived from hundreds of samples flown in space, to determine transcriptomic, proteomic, metabolomic, and epigenetic responses to spaceflight. Overall pathway analyses on the multi-omic datasets showed significant enrichment for mitochondrial processes, as well as innate immunity, chronic inflammation, cell cycle, circadian rhythm, and olfactory functions. Importantly, NASA’s Twin Study provided a platform to confirm several of our principal findings. Evidence of altered mitochondrial function and DNA damage was also found in the urine and blood metabolic data compiled from the astronaut cohort and NASA Twin Study data, indicating mitochondrial stress as a consistent phenotype of spaceflight.",
+  "keywords": "Mitochondria, lipids, spaceflight, GeneLab, NASA Twin Study, NASA, Rodent Research Missions, cell cycle, oxidative phosphorylation, immune system, circadian rhythm, olfactory pathways, microgravity, space radiation, metabolism, metabolic modeling, proteomics, transcriptomics, metabolomics",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

@@ -1,0 +1,16 @@
+{
+  "id": "PMC4116675",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116675/",
+  "title": "Overexpression of CupB5 activates alginate overproduction in ",
+  "authors": "Anna K. de Regt, Yeshi Yin, T. Ryan Withers, Xin Wang, Tania A. Baker, Robert T. Sauer, Hongwei D. Yu",
+  "year": "2014",
+  "journal": "Molecular microbiology",
+  "abstract": "Summary In  P. aeruginosa , alginate overproduction, also known as mucoidy, is negatively regulated by the transmembrane protein MucA, which sequesters the alternative sigma factor AlgU. MucA is degraded via a proteolysis pathway that frees AlgU from sequestration, activating alginate biosynthesis. Initiation of this pathway normally requires two signals: peptide sequences in unassembled outer-membrane proteins (OMPs) activate the AlgW protease, and unassembled lipopolysaccharides bind periplasmic MucB, releasing MucA and facilitating its proteolysis by activated AlgW. To search for novel alginate regulators, we screened a transposon library in the non-mucoid reference strain PAO1, and identified a mutant that confers mucoidy through overexpression of a protein encoded by the  c haperone- u sher  p athway gene  cupB5 . CupB5-dependent mucoidy occurs through the AlgU pathway and can be reversed by overexpression of MucA or MucB. In the presence of activating OMP peptides, peptides corresponding to a region of CupB5 needed for mucoidy further stimulated AlgW cleavage of MucA  in vitro . Moreover, the CupB5 peptide allowed OMP-activated AlgW cleavage of MucA in the presence of the MucB inhibitor. These results support a novel mechanism for conversion to mucoidy in which the proteolytic activity of AlgW and its ability to compete with MucB for MucA is mediated by independent peptide signals.",
+  "keywords": "alginate, MucA, MucB, CupB5, signal transduction",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

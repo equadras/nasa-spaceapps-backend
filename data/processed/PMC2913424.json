@@ -1,0 +1,16 @@
+{
+  "id": "PMC2913424",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2913424/",
+  "title": "From Cellular Mechanotransduction to Biologically Inspired Engineering",
+  "authors": "Donald E. Ingber",
+  "year": "2010",
+  "journal": "Annals of biomedical engineering",
+  "abstract": "This article is based on a lecture I presented as the recipient of the 2009 Pritzker Distinguished Lecturer Award at the Biomedical Engineering Society annual meeting in October 2009. Here, I review more than thirty years of research from my laboratory, beginning with studies designed to test the theory that cells use tensegrity (tensional integrity) architecture to stabilize their shape and sense mechanical signals, which I believed to be critical for control of cell function and tissue development. Although I was trained as a cell biologist, I found that the tools I had at my disposal were insufficient to experimentally test these theories, and thus I ventured into engineering to find critical solutions. This path has been extremely fruitful as it has led to confirmation of the critical role that physical forces play in developmental control, as well as how cells sense and respond to mechanical signals at the molecular level through a process known as cellular mechanotransduction. Many of the predictions of the cellular tensegrity model relating to cell mechanical behaviors have been shown to be valid, and this vision of cell structure led to discovery of the central role that transmembrane adhesion receptors, such as integrins, and the cytoskeleton play in mechanosensing and mechanochemical conversion. In addition, these fundamental studies have led to significant unexpected technology fallout, including development of micromagnetic actuators for non-invasive control of cellular signaling, microfluidic systems as therapeutic extracorporeal devices for sepsis therapy, and new DNA-based nanobiotechnology approaches that permit construction of artificial tensegrities that mimic properties of living materials for applications in tissue engineering and regenerative medicine.",
+  "keywords": "Mechanotransduction, Tensegrity, Cell mechanics, Prestress, Cytoskeleton, Integrin, Biomimetic",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}

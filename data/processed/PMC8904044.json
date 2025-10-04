@@ -1,0 +1,16 @@
+{
+  "id": "PMC8904044",
+  "pmc_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8904044/",
+  "title": "Environmental Dependence of Competitive Fitness in Rifampin-Resistant ",
+  "authors": "Joss D. Leehan, Wayne L. Nicholson",
+  "year": "",
+  "journal": "Applied and Environmental Microbiology",
+  "abstract": "ABSTRACT RNA polymerase (RNAP) is a highly conserved macromolecular machine that contributes to the flow of genetic information from genotype to phenotype. In  Bacillus subtilis , mutations in the  rpoB  gene encoding the β-subunit of RNAP have been shown to alter a number of global phenotypes, including growth, utilization of unusual nutrient sources, sporulation, germination, and production of secondary metabolites. In addition, the spectrum of mutations in  rpoB  leading to rifampin resistance (Rif r ) can change dramatically depending upon the environment to which  B. subtilis  cells or spores are exposed. Rif r \n rpoB  mutations have historically been associated with slower growth and reduced fitness; however, these assessments of fitness were conducted on limited collections of mutants in rich laboratory media that poorly reflect natural environments typically inhabited by  B. subtilis . Using a novel deep-sequencing approach in addition to traditional measurements of growth rate, lag time, and pairwise competitions, we demonstrated that the competitive advantages of specific  rpoB  alleles differ depending on the growth environment in which they are determined. IMPORTANCE  Microbial resistance to antibiotics is a growing threat to public health across the world. Historically, resistance to antibiotics has been associated with reduced fitness. A growing body of evidence indicates that resistance to rifampin, a frontline antibiotic used to treat mycobacterial and biofilm-associated infections, may increase fitness given an appropriate environment even in the absence of the selective antibiotic. Here, we experimentally confirm this phenomenon by directly comparing the fitness of multiple rifampin-resistant mutants of  Bacillus subtilis  in rich LB medium and an asparagine minimal medium. Our research demonstrates that the fitness cost of rifampin resistance can vary greatly depending upon the environment. This has important implications for understanding how microbes develop antimicrobial resistance in the absence of antibiotic selection.",
+  "keywords": "evolution, RNA polymerase, fitness, rifampin, rifampin resistance, transcription",
+  "full_text": "",
+  "introduction": "",
+  "methods": "",
+  "results": "",
+  "discussion": "",
+  "conclusion": ""
+}
