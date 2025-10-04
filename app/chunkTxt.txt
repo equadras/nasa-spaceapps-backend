@@ -1,0 +1,214 @@
+================================================================================
+NASA BIOSCIENCE - QUERY RESULTS
+Timestamp: 2025-10-04 19:45:10
+Query: dst
+================================================================================
+
+
+================================================================================
+CHUNK 1
+================================================================================
+
+Score: 0.2148
+Paper ID: PMC6371294
+Title: FAIRness and Usability for Open-access Omics Data Systems
+Authors: Daniel C. Berrios, Afshin Beheshti, Sylvain V. Costes
+Year: 2018
+Journal: AMIA Annual Symposium Proceedings
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6371294/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Title: FAIRness and Usability for Open-access Omics Data Systems
+
+Abstract: Omics data sharing is crucial to the biological research community, and the last decade or two has seen a huge rise in collaborative analysis systems, databases, and knowledge bases for omics and other systems biology data. We assessed the “FAIRness” of NASA’s GeneLab Data Systems (GLDS) along with four similar kinds of systems in the research omics data domain, using 14 FAIRness metrics. The range of overall FAIRness scores was 6-12 (out of 14), average 10.1, and standard deviation 2.4. The range of Pass ratings for the metrics was 29-79%, Partial Pass 0-21%, and Fail 7-50%. The systems we evaluated performed the best in the areas of data findability and accessibility, and worst in the area of data interoperability. Reusability of metadata, in particular, was frequently not well supported. We relate our experiences implementing semantic integration of omics data from some of the assessed systems for federated querying and retrieval functions, given their shortcomings in data interoperability. Finally, we propose two new principles that Big Data system developers, in particular, should consider for maximizing data accessibility.
+
+
+================================================================================
+CHUNK 2
+================================================================================
+
+Score: 0.2007
+Paper ID: PMC9365836
+Title: Characterization of gene expression profiles in the mouse brain after 35 days of spaceflight mission
+Authors: Jacob M. Holley, Seta Stanbouly, Michael J. Pecaut, Jeffrey S. Willey, Michael Delp, Xiao Wen Mao
+Year: 2022
+Journal: NPJ Microgravity
+Keywords: Neuroscience, Chronic inflammation
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9365836/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+H2-T23 expression is essential for immunological protection and regulation60. HT-T23 dependent T-cell inhibitory interactions aid in preventing expansion of autoreactive CD4 T-cells and collateral autoimmune diseases61. Upregulation of this gene may be a protective response to generalized inflammation in the flight mice. SOX4 directly regulates Innate-like γδ T-cell (Tγδ17), a major source of interleukin-17 (IL-17) (https://www.ncbi.nlm.nih.gov/gene/?term=NM_010552). Increased SOX4 expression may lead to an increase of this cytokine expression in the flight mice62. The gene RIPK1 (https://www.ncbi.nlm.nih.gov/gene/?term=NM_009068) has been shown to be a promotor of survival, apoptotic and inflammatory signaling pathways63,64. However, mice deficient in RIPK1 demonstrated loss of inhibition of a necroptosis pathway which promoted the release of necroptotic damage-associated molecular patterns65. Downregulation of RIPK1 observed in our study may lead to a similar reduction of appropriate apoptosis and an increase in necroptosis resulting in undesirable inflammation. Overall, taking these findings in conjunction with a significantly increased cytokine signaling pathway score (Fig. 6b), inflammatory signaling appears to be significantly dysregulated in our spaceflight mice. Immune dysfunction is further illustrated via the downregulation of two genes important for antimicrobial defense. MPEG1 (https://www.ncbi.nlm.nih.gov/gene/?term=NM_010821) is a pore-forming bactericidal molecule of the innate immune system. It has been shown to be required for the activity of ROS and nitric oxide and their antibacterial effects66,67. OPTN (https://www.ncbi.nlm.nih.gov/gene/?term=NM_181848) codes for a protein that plays a key role in bacterial autophagic clearance. Deficient mice have also been shown to have impaired interferon regulatory factors (https://www.ncbi.nlm.nih.gov/gene/?term=NM_001159393) signaling and reduced response to toll-like receptor stimulation68. In summary, these results imply the impaired antibacterial capabilities and increased viral susceptibility in the flight mouse brain compared to GC group. Our data indicate that the regulation of innate immune response was impaired following spaceflight. The pathway score for the innate immune response was significantly reduced in the flight group compared to GCs (Fig. 6c). The cell type score for exhausted CD8 cells is also greatly reduced for the flight group compared to controls and may indicate a dysfunctional phenotype in CD8 T-cell response. T-cell exhaustion represents an adaptive response to conditions of chronic antigen stimulation and inflammation69, as well as promoting tissue repair following an inflammatory injury70. Functionally exhausted CD8+ cells may result in a severely compromised innate immune response71. Cytochrome P450 27A1 (CYP27A1) (https://www.ncbi.nlm.nih.gov/gene/?term=NM_024264) plays an important role in the metabolism of cholesterol and cholesterol-related compounds72. In humans, complete CYP27A1 deficiency leads to nodule formation in the brain which may lead to dementia, cerebellar ataxia, and spinal cord paresis73. This altered cholesterol metabolism closely associates with inflammatory responses involved in the pathogenesis of AD progression74. In deficient mice, a significant increase in cholestanol in the brain is observed75. Downregulation of CYP27A1, as seen in our flight mice, may lead to neurodegeneration and inflammation in more chronic settings or to a milder degree. Fourteen genes that were significantly altered in the flight mice compared to GCs were found to have direct roles in cellular growth, proliferation, and stress response. Two upregulated genes play an important part in cell cycle arrest during times of cellular stress. GADD45G (https://www.ncbi.nlm.nih.gov/gene/?term=NM_011817) has been found to play a role in activating checkpoints in the cell cycle following exposure of cells to irradiation76.
+
+
+================================================================================
+CHUNK 3
+================================================================================
+
+Score: 0.1911
+Paper ID: PMC11167063
+Title: Telomeric RNA (TERRA) increases in response to spaceflight and high-altitude climbing
+Authors: Taghreed M. Al-Turki, David G. Maranon, Christopher B. Nelson, Aidan M. Lewis, Jared J. Luxton, Lynn E. Taylor, Noelia Altina, Fei Wu, Huixun Du, JangKeun Kim, Namita Damle, Eliah Overbey, Cem Meydan, Kirill Grigorev, Daniel A. Winer, David Furman, Christopher E. Mason, Susan M. Bailey
+Year: 2024
+Journal: Communications Biology
+Keywords: Genetics, Molecular biology
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11167063/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Thus, our approach utilizing the EN-T system facilitated evaluation of telomeric DNA damage/DSBs only in transfected cells (inclusion of non-transfected cells was avoided), and results confirmed the efficiency of EN-T and TRF1-only in inducing DSBs specifically at telomeres in U2OS ALT cells. TERRA response and recruitment to telomeric DSB sites To test the hypothesis that TERRA may respond specifically to telomeric DSB damage sites, TERRA foci were quantified using cell-by-cell 3-D image analysis of RNA-FISH in transfected and untransfected U2OS cell populations. To evaluate and visualize TERRA response to telomeric DSB damage sites, we quantified triple co-localization of FLAG, TERRA, and telomere (TRF2) foci (Fig. 3b, Supplementary Fig. 5a). Significant increases in the mean number of TERRA foci co-localized at telomeric DSB sites (p < 0.0001) were observed in EN-T and TRF1-only transfected populations compared to empty vector and untransfected controls; RNaseA+H treatment removed TERRA signal from all populations (Supplementary Data 5). Furthermore, there was a corresponding decrease in the mean number of undamaged telomeres bound by TERRA in EN-T and TRF1-only transfected cells compared to the steady-state/background levels of undamaged telomeres in empty vector and untransfected populations (Telomere-TERRA co-localized foci). These results provide direct evidence of significantly increased levels of hybridized TERRA specifically at telomeric DSB damage sites, consistent with the transcription-dependent nature of elevated TERRA foci and formation of TERRA:telomeric DNA hybrids in response to broken telomeres; i.e., TERRA binds extensive tracks of resected 5’ single-stranded C-rich telomeric DNA at DSB break sites63. We further examined TERRA:telomeric DNA hybrid dynamics by estimating percentages of bound (hybridized) and unbound (free) TERRA (Supplementary Fig. 5b; Supplementary Data 5). Total TERRA foci in positively transfected EN-T and TRF1-only cells (>20 FLAG foci) with damaged telomeres (FLAG-TERRA-TRF2 foci) were compared to empty vector and untransfected populations with few or no damaged telomeres (TERRA-TRF2 foci). Free TERRA was determined by subtracting hybridized from total TERRA. A striking shift in TERRA distribution occurred in EN-T and TRF1-only transfected populations compared to the controls (empty vector and untransfected). EN-T and TRF1-only transfected cells with damaged telomeres had ~90% of TERRA bound to telomeres, and only ~10% of the total TERRA was free. In control populations, the opposite trend was observed; only ~30% of TERRA was bound to telomeres, while ~70% was free, similar to previous reports in telomerase positive cells36,44. Results indicate that in contrast to typically stable localization of TERRA at telomeres in U2OS ALT cells51, upon induction of telomeric DSBs free TERRA is recruited to damage sites, as the fraction of bound TERRA significantly increased while free TERRA dramatically decreased, reflective of a potentially rapid and robust response to telomeric DSBs.
+
+
+================================================================================
+CHUNK 4
+================================================================================
+
+Score: 0.1562
+Paper ID: PMC11167063
+Title: Telomeric RNA (TERRA) increases in response to spaceflight and high-altitude climbing
+Authors: Taghreed M. Al-Turki, David G. Maranon, Christopher B. Nelson, Aidan M. Lewis, Jared J. Luxton, Lynn E. Taylor, Noelia Altina, Fei Wu, Huixun Du, JangKeun Kim, Namita Damle, Eliah Overbey, Cem Meydan, Kirill Grigorev, Daniel A. Winer, David Furman, Christopher E. Mason, Susan M. Bailey
+Year: 2024
+Journal: Communications Biology
+Keywords: Genetics, Molecular biology
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11167063/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Therefore, to explore the response of TERRA specifically to DSBs that occur within telomeres, we employed the chimeric TRAS1-EN endonuclease fused to TRF1 (EN-T) targeting system61,62 in human U2OS (ALT) cells. We previously demonstrated the utility of this well-characterized system for inducing telomeric DSBs in human normal and cancer cell lines63. Here, populations of cycling U2OS cells were transiently transfected with EN-T, TRF1-only (positive control), or empty vector (EV, transfection control), and then compared to untransfected (UT) negative control populations. To accurately assess DSB induction specifically within telomeres, we first evaluated transfection efficiencies by co-staining for FLAG (to detect EN-T or TRF1-only) and DAPI (to define nuclear DNA/cell periphery) (Supplementary Fig. 3a). To eliminate any background signals, only cells with ≥20 FLAG foci/cell were considered positively transfected (~25–30% of the cells) and subsequently scored by the Cell-Profiler software, i.e., all cells scored were transfected (100%). As expected, the mean number of FLAG foci/cell was significantly higher in EN-T and TRF1-only transfected populations compared to empty vector and untransfected cells (p < 0.001), which represented an ~4-fold increase (Supplementary Fig. 3b; Supplementary Data 5). Additionally, the mean number of FLAG foci/cell for EN-T and TRF1-only transfected populations did not significantly differ, suggesting similar levels of transfection for EN-T and TRF1-only. To validate EN-T induction of telomere-specific DSBs, positively-transfected U2OS cells (FLAG+) were subjected to native (non-denaturing) telomere FISH (to detect resected single-stranded telomeric DNA) together with γ-H2AX immunofluorescence (to detect DNA DSBs)85, which served to identify telomere-specific DSBs as evidenced by triple co-localization of FLAG, γ-H2AX, and telomere (TTAGGG) foci (Supplementary Fig. 4). Both EN-T and TRF1-only co-localized to telomeres and induced telomeric DSBs to similar levels (FLAG-γH2AX-telomere co-localized foci), confirming EN-T induction of targeted telomeric DSBs. That TRF1-only also recruited γ-H2AX to telomeric damage sites is consistent with previous reports86,87 and the recent demonstration that overexpression of wild-type TRF1, and not mutated TRF1, in U2OS ALT cells resulted in a 3-fold increase in telomeric γ-H2AX foci at 48hr88. Telomeric DSBs were not observed in cells transfected with empty vector or in untransfected populations (FLAG-), and as expected there was no significant effect of RNaseA+H treatment (Supplementary Data 5). When the data was evaluated as percent co-localization (Supplementary Fig. 4b), FLAG-γH2AX-telomere foci co-localized at most telomeres in EN-T and TRF1-only transfected cells (>80% were damaged), and all detectable γ-H2AX was localized to telomeres. Thus, our approach utilizing the EN-T system facilitated evaluation of telomeric DNA damage/DSBs only in transfected cells (inclusion of non-transfected cells was avoided), and results confirmed the efficiency of EN-T and TRF1-only in inducing DSBs specifically at telomeres in U2OS ALT cells.
+
+
+================================================================================
+CHUNK 5
+================================================================================
+
+Score: 0.1445
+Paper ID: PMC8450295
+Title: Telomere length assessments of muscle stem cells in rodent and human skeletal muscle sections
+Authors: Elisia D. Tichy, Foteini Mourkioti
+Year: 2021
+Journal: STAR Protocols
+Keywords: Cell Biology, Cell isolation, Cell-based Assays, In Situ Hybridization, Microscopy, Stem Cells
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8450295/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+b. Click the “Scoring” button that has an arrow. c. Select all data under “Scorings” and click the “Cells” button that has an arrow. d. Select all data under “Cells” and copy and paste into Excel or other spreadsheet software. Ensure that you also note the headings for each column. Troubleshooting 4 26. To analyze datasets using the Telomere sum option, refer to the last column of the dataset. It represents the telomere sum intensity divided by DAPI sum intensity formula∗100. Optional: If telomere mean intensities are desired per cell instead of total (sum) intensities, calculate this value by dividing the datasets in the Telomere Mean column by its respective DAPI Sum. Optional: If one desires to normalize to centromere intensity instead of DAPI intensity, the procedure for telomere analysis is repeated, but instead of using the Telomere images on prompt to open, the centromere images are opened instead. The nuclei should be named and selected similarly in the same order as the telomere analysis. Then the last column of data from the telomere analysis is divided by the last column of centromere data analysis. Troubleshooting 5 27. Graph datasets as desired in Graphpad prism. Data can be graphed as total intensity values, or data can be graphed as histograms to demonstrate minor shifts of telomere length within the populations (Figure 3). Troubleshooting 6 Figure 3 Example graphical plots from Telometer analysis (A) CRYO MuQ-FISH Telomere Sum Intensity/DAPI Sum Intensity (Percent) data graphed from 2 different mouse genotypes subjected to chronic injury. Note the significant reduction of telomere lengths in genotype 2. Genotypes depicted in this figure are those used in our companion article (Tichy et al., 2021) and are control and IKK2CAMuSC mice subjected to chronic injuries. (B) CRYO MuQ-FISH data binned in Microsoft Excel from (A) and plotted as percent of cells per mouse and per genotype. Bins are arbitrarily assigned. Note that the shift of the population of genotype 2 to the left is indicative of telomere shortening. (C) CRYO MuQ-FISH Telomere Mean Intensity/DAPI Sum Intensity (calculated percent) from analysis in (A). (D) Histogram representation of data from (C). For all graphs, N=3 mice per genotype, with a minimum of 35 cells imaged per mouse. Depicted are mean ± SEM. ∗∗∗∗ p<0.0001. Note: The telomere and centromere probes are probes that recognize mammalian DNA sequences and are functional in other species, including samples from rat and human. We have found that this protocol is compatible with muscle tissues of human and rat skeletal muscle cryosections (Figures 4 and 5). We also examined the adaptability of this protocol to several other tissue types (spleen, liver, kidney, testicle, and colon) and found this protocol does appropriately label telomeres in all tissues examined (Figure 5), increasing the impact and usability of this method. However, in such tissues, it may be necessary to utilize thinner sections or more advanced microscopes (confocal microscopy), given the increased number of focal planes exhibiting telomere foci observed. Figure 4 Application of CRYO MUQ-FISH to human skeletal muscle samples reveals compatibility of the method with human tissues Cryosections were stained with the endothelial marker CD31 and processed for CRYO MuQ-FISH. Scale bar: 10 μm. Figure 5 Assessment of CRYO MuQ-FISH protocol translatability to additional tissue and organism types Scale bar: 10 μm. Note- background was left intentionally higher to demonstrate surrounding tissue architecture. Adult 17-month-old male Sprague-Dawley rat tissues were collected and processed identically as described in the CRYO MuQ-FISH protocol and imaged for telomere signal and DAPI.
+
+
+================================================================================
+CHUNK 6
+================================================================================
+
+Score: 0.1406
+Paper ID: PMC6137544
+Title: Spaceflight impairs antigen-specific tolerance induction in vivo and increases inflammatory cytokines
+Authors: Tammy T. Chang, Sandra M. Spurlock, Tara Lynne T. Candelario, S. Marlene Grenon, Millie Hughes-Fulford
+Year: 2015
+Journal: The FASEB Journal
+Keywords: inflammation, microgravity, T-cell memory, T-cell tolerance, transgenic model
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6137544/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Title: Spaceflight impairs antigen-specific tolerance induction in vivo and increases inflammatory cytokines
+
+Abstract: The health risks of a dysregulated immune response during spaceflight are important to understand as plans emerge for humans to embark on long-term space travel to Mars. In this first-of-its-kind study, we used adoptive transfer of T-cell receptor transgenic OT-II CD4 T cells to track an in vivo antigen-specific immune response that was induced during the course of spaceflight. Experimental mice destined for spaceflight and mice that remained on the ground received transferred OT-II cells and cognate peptide stimulation with ovalbumin (OVA) 323-339 plus the inflammatory adjuvant, monophosphoryl lipid A. Control mice in both flight and ground cohorts received monophosphoryl lipid A alone without additional OVA stimulation. Numbers of OT-II cells in flight mice treated with OVA were significantly increased by 2-fold compared with ground mice treated with OVA, suggesting that tolerance induction was impaired by spaceflight. Production of proinflammatory cytokines were significantly increased in flight compared with ground mice, including a 5-fold increase in IFN-γ and a 10-fold increase in IL-17. This study is the first to show that immune tolerance may be impaired in spaceflight, leading to excessive inflammatory responses.—Chang, T. T., Spurlock, S. M, Candelario, T. L. T., Grenon, S. M., Hughes-Fulford, M. Spaceflight impairs antigen-specific tolerance induction in vivo and increases inflammatory cytokines.
+
+
+================================================================================
+CHUNK 7
+================================================================================
+
+Score: 0.1400
+Paper ID: PMC7778922
+Title: NASA GeneLab: interfaces for the exploration of space omics data
+Authors: Daniel C Berrios, Jonathan Galazka, Kirill Grigorev, Samrawit Gebre, Sylvain V Costes
+Year: 2020
+Journal: Nucleic Acids Research
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7778922/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Title: NASA GeneLab: interfaces for the exploration of space omics data
+
+Abstract: Abstract The mission of NASA’s GeneLab database (https://genelab.nasa.gov/) is to collect, curate, and provide access to the genomic, transcriptomic, proteomic and metabolomic (so-called ‘omics’) data from biospecimens flown in space or exposed to simulated space stressors, maximizing their utilization. This large collection of data enables the exploration of molecular network responses to space environments using a systems biology approach. We review here the various components of the GeneLab platform, including the new data repository web interface, and the GeneLab Online Data Entry (GEODE) web portal, which will support the expansion of the database in the future to include companion non-omics assay data. We discuss our design for GEODE, particularly how it promotes investigators providing more accurate metadata, reducing the curation effort required of GeneLab staff. We also introduce here a new GeneLab Application Programming Interface (API) specifically designed to support tools for the visualization of processed omics data. We review the outreach efforts by GeneLab to utilize the spaceflight data in the repository to generate novel discoveries and develop new hypotheses, including spearheading data analysis working groups, and a high school student training program. All these efforts are aimed ultimately at supporting precision risk management for human space exploration.
+
+Introduction: Scientists are leveraging space-based platforms such as the International Space Station (ISS) and earth-based laboratories such as the NASA Space Radiation Laboratory to study the effects of space on biological organisms, generating nucleic acid, protein, and metabolite profiling data at an unprecedented rate. The 2011 National Research Council (NRC) Decadal Survey presaged this ‘wave of change’ almost a decade ago, and called for the development of more powerful informatics technologies to meet the growing needs of these researchers (1). The Survey also promulgated the use of a systems biology approach by space biosciences investigators, which led to the formation of the GeneLab project (https://genelab.nasa.gov/), a science initiative at NASA to maximize omics data collected from spaceflight and ground simulation experiments, and including the creation in 2014 of the NASA GeneLab data repository (https://genelab-data.ndc.nasa.gov/ ) (1). The mission of GeneLab is to maximize the utilization of valuable biospecimens flown in space or exposed to simulated space stressors through the collection and curation of genomic, transcriptomic, proteomic and metabolomic (so-called ‘omics’) data, in order to enable the exploration of molecular network responses to space environments using a systems biology approach. Our designs for the data repository continue to be guided by the FAIR principles (2,3). To foster open science in space biology research and to stimulate research opportunities based on an integrated multi-omics analysis approach, investigators who generate omics data are encouraged to contact GeneLab for the latest information concerning data submission requirements and procedures. All GeneLab repository data are open-access. We review here the various components (Figure 1) of the database, then describe its new data repository web interface and the GeneLab Online Data Entry (GEODE) web portal, which provides ‘self-service’ data curation, and will support the expansion of the database in the future to include companion non-omics assay data. We discuss our design strategies for GEODE, emphasizing how they promote investigators providing more accurate metadata using controlled vocabularies, reducing the curation effort required of GeneLab staff. We also introduce here a new GeneLab Application Programming Interface (API) specifically designed to support tools for the visualization of processed omics data. Such visualization tools are essential to fulfil an ‘Open Science’ mandate, democratizing the access to data and allowing the scientific community at large to gain new knowledge on how spaceflight affects life, from humans and mice, to plants and microbes. Figure 1. The GeneLab database and its connections to intramural and extramural systems. The database API is leveraged extensively by components of the GeneLab Data Systems: the database web browser interface (A), the GeneLab Online Data Entry tool (B), a workspace tool for private data sharing (C), and the GeneLab data visualization server (D). The database API is also being used to power various extramural data analytics and visualization tools (E, F). The GeneLab Public Analytics platform (G) and Data Processing systems (H) access the repository data files directly.
+
+
+================================================================================
+CHUNK 8
+================================================================================
+
+Score: 0.1344
+Paper ID: PMC9583032
+Title: Routine omics collection is a golden opportunity for European human research in space and analog environments
+Authors: Henry Cope, Craig R.G. Willis, Matthew J. MacKay, Lindsay A. Rutter, Li Shean Toh, Philip M. Williams, Raúl Herranz, Joseph Borg, Daniela Bezdan, Stefania Giacomello, Masafumi Muratani, Christopher E. Mason, Timothy Etheridge, Nathaniel J. Szewczyk
+Year: 2022
+Journal: Patterns
+Keywords: multiomics, European Space Agency, commercial spaceflight, personalized medicine, International Space Station, longitudinal monitoring, GDPR, astronaut ethics, biobank, artificial intelligence
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9583032/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+Translational research utilizes model organisms, including rodents, for molecular studies in space,7 with the aim of understanding and countering detrimental physiological changes in astronauts. Space analog research utilizes facilities on Earth, which enable one to study individual aspects of the spaceflight environment without having to conduct studies in space. In the context of human research, this can include studying inactivity via bedrest studies and isolation via use of remote research stations, such as Concordia.8 At the 2022 European Space Summit, the European Association of Space Explorers called for the development of European vehicles for transporting humans into space. Irrespective of whether or not this becomes a near- to medium-term reality, not only will ESA astronauts continue to regularly fly to the ISS but also they will fly in future exploration missions with international partners. One such example is the Artemis 2 mission to the moon, which could occur as early as 2025. The new generation of spacecraft used for these missions is likely to have highly limited cargo capacity; therefore, countermeasures, such as the Advanced Resistive Exercise Device (ARED), used on board the ISS to suppress muscle and bone loss, may not be suitable.9 Additionally, during these exploration missions, astronauts will venture beyond low Earth orbit (LEO) for the first time since the end of the Apollo program in 1972. Within LEO, the Earth’s magnetosphere provides partial protection against radiation; thus, humans venturing beyond this will experience greater exposure to solar particle event radiation and ionizing galactic cosmic radiation.2,10,11 Although there is a lack of data on the molecular effects of the beyond LEO environment, an increase in radiation-associated health risks is almost a certainty.12, 13, 14 Further considerations of future missions beyond LEO include health risks associated with unprecedentedly long-duration missions, lunar dust,15 and EVA.2 To the latter point, in the case of a Mars mission, the crew would likely need to safely perform EVA tasks in partial gravity (0.38 g) following long-duration spaceflight, without the extensive rehabilitation support available on Earth.9,16 With these new spacecraft and mission plans, it will be crucial to assess compatible countermeasures, while also gaining greater insight into the new challenges to human health posed by environments where biological and molecular adaptations remain uncharted. A key challenge for translational research from a European standpoint is that the ESA does not currently have rodent research facilities in space, and it seems unlikely that such facilities will be rapidly developed for future exploration vehicles. Thus, new approaches that do not depend on rodent research facilities should be considered by ESA. In this context, a salient opportunity for space analog research is to harmonize measures and endpoints between research in analog environments and in space, increasing fidelity. For example, the efficacy of new countermeasures could be evaluated in both environments, and the efficacy of rehabilitation following long-duration spaceflight16 could be studied and improved by testing novel rehabilitation techniques following long-duration bedrest. For these reasons, it could prove cost effective for the ESA to pursue an approach that focuses on improved capabilities for research on astronauts themselves and with increased harmonization of data and endpoint measures obtained in space and analog environments. On Earth, medicine has undergone a revolution through the widespread generation and analysis of multiple omic data types, including genomics, transcriptomics, and proteomics. The strength of omic-based, data-driven approaches is their power to discover unanticipated effects, elucidate molecular mechanisms, and generate novel hypotheses to guide follow-up targeted studies.17,18 In scientific studies on Earth, omic-derived molecular changes are regularly correlated with performance metrics to uncover molecular drivers of physiological change.19 Omics have also become a valuable tool for clinical practice.
+
+
+================================================================================
+CHUNK 9
+================================================================================
+
+Score: 0.1293
+Paper ID: PMC9964234
+Title: Designing a Novel Monitoring Approach for the Effects of Space Travel on Astronauts’ Health
+Authors: Anurag Sakharkar, Jian Yang
+Year: 2023
+Journal: Life
+Keywords: space biology, diagnostic assay, health, transcriptome, space flight
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9964234/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+In summary, the large variation of the biological processes regulated by the DEGs provides a valuable resource of genes for us to develop a rapid assay kit (~20–30 genes) to monitor astronauts’ health conditions in space. However, it is noteworthy that the three genes reported by Terada et al., FGF18, ANGPTL7, and COMP, are not in the aforementioned DEG list because they failed to meet the cut-off criteria. 3.2. Gene Pair Correlations As mentioned above, the effect of space travel on an astronaut’s health is comprehensive and involves the regulation of many genes. It is also well-known that any biological, physiological, or pathophysiological change requires a delicate coordination of multiple genes. Therefore, we decided to carry out a gene pair correlation analysis for the whole genome (30,645 transcripts for 23,115 genes) among the Pre-flight, In-flight, and Post-flight expression profiles. As shown in Figure 1A, the genes are highly correlated in the Pre-flight, which is consistent with previous studies showing that gene expressions are correlated in normal human tissues [49]. Upon staying in the ISS for an extended period of 6 months, the genome significantly lost its regulation of the gene expression and gene coordination was scrambled (Figure 1B). Our previous studies have shown that loss of gene pair correlations is a hallmark of carcinogenesis and/or cancer progression [50,51,52]. Therefore, loss of coordination of gene expression, other than cosmic radiation and compromised immune system, is likely to be another factor that increases the risk of cancer development in astronauts. Analysis of the Post-flight dataset showed that returning to ground did not significantly improve genome regulation and coordination of gene expression (Figure 1C), implying that the effect of space travel on human health is more profound and longer lasting than currently thought. Extended care is necessary for astronauts to minimize the risk of disease development. As we progress towards crewed missions into outer space (for example, to the Moon and Mars) and other prolonged space stays, it is critical to develop rapid approaches to monitor genome regulation and establish corresponding protocols to alleviate the effects of space travel on human health. Another important question that needs to be addressed is whether the human body could establish a new “routine” for prolonged space stays and what this would look like in terms of astronauts’ health. We speculate that loss of gene expression coordination might also be responsible for other diseases/conditions astronauts experience, such as muscle loss and compromised immune system. Extensive further studies in space biomedicine and space pharmacology are warranted to prepare us for longer-term outer space exploration. 3.3. Signaling Pathway and Disease Network of the DEGs Because DEGs are the most altered genes during a biological process, we conducted a signaling pathway analysis of the 218 DEGs between In-flight and Pre-flight to figure out which biological functions are regulated by these genes. The top 11 signaling pathways were identified to be signal transduction, immune system, gene expression, metabolism, metabolism of proteins, generic transcription pathway, developmental biology, metabolism of lipids and lipoproteins, axon guidance, innate immune system, and disease (Table 2). In total, 48 genes were found to be involved in the regulation of these top 11 signaling pathways. Moreover, it is obvious that most of these DEGs are involved in the regulation of multiple signaling pathways, and that these signaling pathways regulate a broad range of biological, physiological, and/or pathophysiological processes. This analysis reconfirms that space travel imposes comprehensive effects on the human system rather than affecting an individual organ or tissue. We further analyzed the disease network for the 218 DEGs between the In-flight and Pre-flight expression profiles to identify the major disease/disorder conditions associated with space travel (Supplementary File S2: Disease_DEG.xls). As shown in Table 3, the top 20 disease/disorder conditions can broadly be divided into three categories: neoplasia/carcinoma, neurological disorder, and liver function, with the top three conditions being malignant neoplasm of the breast, colorectal carcinoma, and malignant neoplasm of the prostate. More DEGs were associated with tumor development than other diseases/disorders. In 2019, Reynolds et al. reported the effect of space radiation on astronauts’ death using a statistical analysis [53].
+
+
+================================================================================
+CHUNK 10
+================================================================================
+
+Score: 0.1285
+Paper ID: PMC8220224
+Title: Spaceflight decelerates the epigenetic clock orchestrated with a global alteration in DNA methylome and transcriptome in the mouse retina
+Authors: Zhong Chen, Seta Stanbouly, Nina C Nishiyama, Xin Chen, Michael D Delp, Hongyu Qiu, Xiao W Mao, Charles Wang
+Year: 2021
+Journal: Precision Clinical Medicine
+Keywords: spaceflight, DNA methylome, transcriptome, epigenetic clock
+Link: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8220224/
+
+--------------------------------------------------------------------------------
+CHUNK TEXT:
+--------------------------------------------------------------------------------
+
+We identified differentially methylated genes (DMGs) and differentially expressed genes (DEGs) between spaceflight and ground control mice. In addition, as epigenetic clocks have been used to predict tissue biological ages and age-related diseases in both humans19 and mice20,21, we calculated spaceflight-induced epigenetic clock based on the DNA methylation at unique CpG sites of mouse retinas to predict the retinal tissue aging due to the spaceflight. This study provides new insights into the visual impairment due to long-duration spaceflight.
+
+Methods: Study design Figure 1 illustrates the overall study design. The 16-week-old female C57 BL/6J mice (Jackson Lab, Bar Harbor, ME) were used in this study as part of the NASA RR-1 project consortium. This project was approved by the NASA Institutional Animal Care and Use Committee. Both spaceflight and ground control animals were housed in NASA's animal enclosure modules (AEM), with control mice being exposed to the same environment conditions (12-hour light cycle, temperature and humidity) as those flown on the International Space Station (ISS). Control animals were kept inside an environmental simulator (ISSES) at the Space Life Science Laboratory (SLSL) at Kennedy Space Center (KSC), and the spaceflight animals were transported to the ISS by SpaceX4 on September 21, 2014. All animals were fed with a special NASA food bar diet and their health was checked daily. The spaceflight mice were euthanized and frozen on-orbit after 37 days of flight, while ground control mice were simultaneously euthanized and frozen under identical conditions. After the frozen carcasses were returned to KSC, the ocular tissues were removed from both groups. DNA and RNA were extracted from the same retinal sample and were used for library constructions using NuGEN Ovation® RRBS and Ovation® Mouse RNA-seq library construction kits, respectively. Libraries were multiplexed with unique sample indices, pooled, and sequenced on an Illumina NextSeq 550. FastQ files were subject to FastQC, adapter and low-quality reads trimming before mapping to mouse genome NCBI GRCm38. Differential CpG methylation regions and differential expressed genes were determined after mapping and counting, and the resulting DMR and DEG lists were subject to IPA and DAVID gene functional analysis. The epigenetic clock was determined using the MouseEpigeneticClock script developed by Stubbs et al. (2017).20 Dissection and preservation of the mouse ocular samples At the time of dissections, both eyes were dissected from the carcasses thawed at room temperature for 15–20 minutes. The eyes were harvested and snap frozen in liquid nitrogen, then stored at −80 °C. The frozen whole eye samples were micro-dissected in the ice-cold phosphate-buffered saline (PBS). Fine spring scissors were used to separate the cornea from the sclera to access the retina. The retina was carefully detached from the sclera. The retina, cornea, and lens were immediately frozen on dry ice and stored at −80°C before DNA and RNA isolations. DNA and RNA isolations Retinal tissues (4–20 mg) were homogenized with Precellys CKM beads (Hilden, Germany) in 350 µl of Qiagen RLT plus buffer. The genomic DNA (gDNA) and total RNA were isolated using the Qiagen AllPrep DNA/RNA/miRNA Universal Kit according to the manufacturer's protocol. After isolation, RNA and DNA were frozen and kept at −80 °C until further use. Isolated RNA samples were quantified using NanoDrop spectrophotometry (Thermo Scientific, Chino, CA). DNA and RNA were further quantified using the Qubit dsDNA High Sensitivity Kit and RNA Broad Range Kit, respectively (Life Technologies, Carlsbad, CA). RNA quality was evaluated using the Agilent 2200 TapeStation and RNA ScreenTape (Santa Clara, CA). All RNA samples had an integrity numbers (RIN) ranging from 7.2 to 8.1.
+

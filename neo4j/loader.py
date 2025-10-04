@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+load_dotenv()
 
 import json
 from pathlib import Path
@@ -113,10 +114,15 @@ def setup_llamaindex(documents):
     # ⚡ configure sua conexão Neo4j
     graph_store = Neo4jGraphStore(
         username="neo4j",
-        password="your_password",   # altere para sua senha real
-        url="bolt://localhost:7687",  # ou bolt+s:// para Aura
+        password="_iy8z1ClzSEr-yjPNa-f3pfOWYQBjgzuUmdOmFIlyqI",   # altere para sua senha real
+        url="neo4j+s://e8448abc.databases.neo4j.io",  # ou bolt+s:// para Aura
         database="neo4j",            # padrão
     )
+
+    # a quick write-read cycle
+    graph_store.query("MERGE (:__Test {k:'ok'})")
+    rec = graph_store.query("MATCH (n:__Test {k:'ok'}) RETURN count(n) AS c")
+    print(f"Neo4j write smoke test count = {rec[0]['c']}")
 
     print("\nConfiguring embedding model (optional, for semantic search)...")
 
@@ -138,7 +144,7 @@ def setup_llamaindex(documents):
     # Define settings globais
     Settings.llm = llm
     Settings.embed_model = embed_model
-    Settings.chunk_size = 16382
+    Settings.chunk_size = 512 
     Settings.chunk_overlap = 10
 
     print("\nLoading documents into KnowledgeGraphIndex (Neo4j)...")
@@ -177,25 +183,35 @@ def setup_llamaindex(documents):
     my_custom_prompt = PromptTemplate(prompt_str)
 
     # --- 3. Create an Empty Knowledge Graph Index ---
+
+    storage_context = StorageContext.from_defaults(graph_store=graph_store)
+
+    # Criar o índice do grafo
     kg_index = KnowledgeGraphIndex(
         nodes=[],  # Start with no nodes
         kg_triplet_extract_template=my_custom_prompt,
+        storage_context=storage_context,
         max_triplets_per_chunk=100,
-        space_name=space_name,
-        edge_types=edge_types,
-        rel_prop_names=rel_prop_names,
-        tags=tags,
+        #space_name=space_name,
+        #edge_types=edge_types,
+        #rel_prop_names=rel_prop_names,
+        #tags=tags,
         include_embeddings=True,
+        show_progress=True,
     )
 
     # --- 4. Loop and Insert Each Chunk Individually ---
     print("Processing chunks and building knowledge graph...")
+    cnt = 0
     for i, node in enumerate(nodes):
         try:
             # Call the retry-enabled function for each node
             kg_index.insert_nodes([node])
             print(f"Loaded node #{i}. Nodes left: {len(nodes)-i-1}")
             time.sleep(31)
+            cnt += 1
+            if cnt > 1:
+                break
         except Exception as e:
             # This will only be hit if all retry attempts for a specific node fail
             logging.error(f"Failed to process node #{i}. Aborting. Error: {e}")
@@ -203,22 +219,13 @@ def setup_llamaindex(documents):
 
     logging.info("Knowledge graph built successfully from all chunks!")
 
-    # Criar o índice do grafo
-    index = KnowledgeGraphIndex.from_documents(
-        documents,
-        storage_context=None,        # usa o default
-        graph_store=graph_store,     # 👉 salva no Neo4j em vez de memória
-        max_triplets_per_chunk=10,
-        include_embeddings=True,     # se quiser semantic query
-        show_progress=True,
-    )
 
     print("\nKnowledge Graph Index created successfully in Neo4j!")
 
-    return index, graph_store
+    return kg_index, graph_store
 
 
-def visualize():
+def visualize(kg_index):
     from pyvis.network import Network
     import logging
     import sys
@@ -282,7 +289,7 @@ def main():
         index, graph_store = setup_llamaindex(documents)
 
         # 4. Verify (count nodes and edges in Neo4j)
-        driver = graph_store.driver
+        driver = graph_store._driver
         with driver.session() as session:
             node_count = session.run("MATCH (n) RETURN count(n) AS c").single()["c"]
             edge_count = session.run("MATCH ()-[r]->() RETURN count(r) AS c").single()["c"]
@@ -291,7 +298,7 @@ def main():
         print(f"Total relationships in Neo4j: {edge_count}")
 
         # 5. Test queries
-        test_queries(index, documents)
+#test_queries(index, documents)
 
         print("\n" + "=" * 70)
         print("PROCESS COMPLETED SUCCESSFULLY!")
@@ -303,7 +310,7 @@ def main():
         print("\nGraph search system ready!")
         print("=" * 70)
 
-        visualize()  # se você já tiver uma função para desenhar
+        visualize(index)  # se você já tiver uma função para desenhar
 
     except Exception as e:
         print(f"\nERROR: {e}")
