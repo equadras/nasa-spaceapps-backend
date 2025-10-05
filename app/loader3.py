@@ -22,7 +22,7 @@ from rank_bm25 import BM25Okapi
 class HybridRetriever:
     """Combines BM25 keyword search with vector semantic search"""
     
-    def __init__(self, index, documents, alpha=0.5):
+    def __init__(self, index, documents, alpha=0.8):
         """
         Args:
             index: LlamaIndex VectorStoreIndex
@@ -238,7 +238,8 @@ def create_hybrid_query_engine(index, documents, alpha=0.5, use_reranking=True):
     if use_reranking:
         print("Adding cross-encoder re-ranking...")
         rerank = SentenceTransformerRerank(
-            model="cross-encoder/ms-marco-MiniLM-L-2-v2",
+            #model="cross-encoder/ms-marco-MiniLM-L-2-v2",
+            model_name="sentence-transformers/all-mpnet-base-v2",
             top_n=5
         )
         
