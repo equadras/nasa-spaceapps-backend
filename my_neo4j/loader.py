@@ -164,12 +164,16 @@ def setup_llamaindex(documents):
     )
 
     print("Processing chunks and building knowledge graph...")
+    cnt = 0
     for i, node in enumerate(nodes):
         try:
             print(f"Loading node #{i}...")
             kg_index.insert_nodes([node])
             print(f"OK node #{i}. Nodes left: {len(nodes)-i-1}")
             time.sleep(31)
+            cnt += 1
+            if cnt >= 2:
+                break
         except Exception as e:
             logging.error(f"Failed to process node #{i}. Aborting. Error: {e}")
             break
