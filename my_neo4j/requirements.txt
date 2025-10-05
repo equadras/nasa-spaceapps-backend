@@ -2,3 +2,4 @@ llama-index
 llama-index-llms-google-genai	
 pyvis
 networkx
+llama-index-graph-stores-neo4j
