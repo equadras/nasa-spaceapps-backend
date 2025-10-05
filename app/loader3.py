@@ -253,46 +253,6 @@ def create_hybrid_query_engine(index, documents, alpha=0.5, use_reranking=True):
     return query_engine
 
 
-def test_queries(index, documents):
-    """Testa o sistema com queries de exemplo"""
-    
-    print("\n" + "=" * 70)
-    print("TESTING HYBRID RETRIEVAL (BM25 + Vector + Re-ranking)")
-    print("=" * 70)
-    
-    # Create hybrid query engine with alpha=0.4 for better keyword matching
-    query_engine = create_hybrid_query_engine(
-        index, 
-        documents, 
-        alpha=0.4,  # 40% vector, 60% BM25 - better for keyword-specific queries
-        use_reranking=True
-    )
-    
-    test_queries_list = [
-        "water deprived environments",  # Your problematic query
-        "What are the main effects of microgravity on human health?",
-        "How does space radiation affect biological systems?",
-        "bone loss in space",
-        "immune system changes during spaceflight"
-    ]
-    
-    for i, query in enumerate(test_queries_list, 1):
-        print(f"\n{'-' * 70}")
-        print(f"Query {i}: {query}")
-        print('-' * 70)
-        
-        response = query_engine.query(query)
-        
-        print(f"\nResponse:")
-        print(str(response)[:400] + "..." if len(str(response)) > 400 else str(response))
-        
-        print(f"\nRelevant papers ({len(response.source_nodes)} results):")
-        for j, node in enumerate(response.source_nodes, 1):
-            meta = node.node.metadata
-            score = node.score if hasattr(node, 'score') else 'N/A'
-            print(f"  {j}. {meta.get('title', 'N/A')[:80]}...")
-            print(f"     Score: {score:.4f} | Year: {meta.get('year', 'N/A')}")
-
 
 def main():
     print("=" * 70)
@@ -319,8 +279,6 @@ def main():
         count = collection.count()
         print(f"\nTotal chunks in ChromaDB: {count}")
         
-        # 5. Test with hybrid retrieval	
-        test_queries(index, documents)
         
         print("\n" + "=" * 70)
         print("PROCESS COMPLETED SUCCESSFULLY!")
