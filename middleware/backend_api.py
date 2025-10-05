@@ -13,6 +13,10 @@ from dotenv import load_dotenv
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+import google.generativeai as genai
+
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
 
 load_dotenv()
 
@@ -66,6 +70,17 @@ class QueryResponse(BaseModel):
     total_results: int
     chunks: List[ChunkResult]
     timestamp: str
+
+class SummarizeRequest(BaseModel):
+    query: str
+    chunks: List[ChunkResult]
+
+class SummarizeResponse(BaseModel):
+    query: str
+    summary: str
+    sources_count: int
+    timestamp: str
+
 
 # Helper function for app identification
 def verify_app_id(x_app_id: Optional[str] = Header(None)):
@@ -244,6 +259,92 @@ async def get_paper(
     except Exception as e:
         logger.error(f"Get paper failed: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve paper")
+
+@app.post("/summarize", response_model=SummarizeResponse)
+@limiter.limit("10/minute")  # Lower limit since it calls LLM
+async def summarize_results(
+    request: Request,
+    summarize_request: SummarizeRequest,
+    x_app_id: str = Header(None)
+):
+    """
+    Generate AI summary from query results
+    
+    Rate limit: 10 requests per minute per IP
+    Requires: X-App-Id header and GEMINI_API_KEY configured
+    """
+    verify_app_id(x_app_id)
+    
+    if not GEMINI_API_KEY:
+        raise HTTPException(
+            status_code=503,
+            detail="AI summarization not configured"
+        )
+    
+    try:
+        # Build context from chunks
+        context_parts = []
+        seen_papers = set()
+        
+        for chunk in summarize_request.chunks[:10]:  # Limit to 10 chunks
+            meta = chunk.metadata
+            paper_id = meta.get('paper_id', '')
+            
+            if paper_id and paper_id not in seen_papers:
+                seen_papers.add(paper_id)
+                
+                context_parts.append(
+                    f"Paper: {meta.get('title', 'Unknown')}\n"
+                    f"Authors: {meta.get('authors', 'Unknown')}\n"
+                    f"Year: {meta.get('year', 'Unknown')}\n"
+                    f"Journal: {meta.get('journal', 'Unknown')}\n"
+                    f"Content: {chunk.text[:800]}...\n"
+                )
+        
+        if not context_parts:
+            raise HTTPException(
+                status_code=400,
+                detail="No valid papers to summarize"
+            )
+        
+        context = "\n---\n".join(context_parts)
+        
+        # Create prompt
+        prompt = f"""You are a specialized biological space research assistant. Based on the query "{summarize_request.query}", provide a comprehensive summary (2-3 paragraphs) synthesizing the key findings from the scientific papers below.
+
+Focus on:
+- Main findings related to the query
+- Common themes across papers
+- Specific effects, mechanisms, or observations mentioned
+- Year of research when relevant
+
+Write in clear, accessible scientific language. Do not make claims beyond what the papers state.
+
+Scientific Papers:
+{context}
+
+Summary:"""
+        
+        # Call Gemini
+        model = genai.GenerativeModel('models/gemma-3n')
+        response = model.generate_content(prompt)
+        summary = response.text
+        
+        logger.info(f"Generated summary for: {summarize_request.query}")
+        
+        return SummarizeResponse(
+            query=summarize_request.query,
+            summary=summary,
+            sources_count=len(seen_papers),
+            timestamp=datetime.utcnow().isoformat()
+        )
+    
+    except Exception as e:
+        logger.error(f"Summarization failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Summarization failed: {str(e)}"
+        )
 
 if __name__ == "__main__":
     import uvicorn
