@@ -26,7 +26,7 @@ class HybridPaperQueryEngine:
         self.similarity_threshold = similarity_threshold
         
         # ChromaDB
-        db_path = Path('../database/chroma_db')
+        db_path = Path('./database/chroma_db')
         if not db_path.exists():
             print("ERROR: Database not found!")
             sys.exit(1)
