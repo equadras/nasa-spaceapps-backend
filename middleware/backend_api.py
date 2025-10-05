@@ -71,19 +71,18 @@ class ChunkResult(BaseModel):
     text: str
     metadata: dict
 
-class QueryResponse(BaseModel):
-    query: str
-    total_results: int
-    chunks: List[ChunkResult]
-    timestamp: str
-
 class SummarizeRequest(BaseModel):
     query: str
     chunks: List[ChunkResult]
 
+class PaperReference(BaseModel):
+    paper_id: str
+    title: str
+
 class QueryResponse(BaseModel):
     content: str
-    referenceNodes: List[str]
+    referenceNodes: List[PaperReference]
+
 
 # Helper function for app identification
 def verify_app_id(x_app_id: Optional[str] = Header(None)):
@@ -133,7 +132,7 @@ async def health_check():
         )
 
 @app.post("/query", response_model=QueryResponse)
-@limiter.limit("20/minute")
+@limiter.limit("5/minute")
 async def query_papers(
     request: Request,
     query_request: QueryRequest,
@@ -166,9 +165,12 @@ async def query_papers(
         
         chunks = [ChunkResult(**chunk) for chunk in result['chunks']]
         
-        # Generate AI summary
         content = ""
         reference_nodes = []
+        tittle = ""
+
+#want to add the paper tittle here
+        tittle = ""
         
         if GEMINI_API_KEY and chunks:
             try:
@@ -180,7 +182,9 @@ async def query_papers(
                     paper_id = meta.get('paper_id', '')
                     
                     if paper_id and paper_id not in seen_papers:
-                        seen_papers[paper_id] = True
+                        seen_papers[paper_id] = {
+                            'title': meta.get('title', 'Unknown')
+                        }
                         
                         context_parts.append(
                             f"[{paper_id}] {meta.get('title', 'Unknown')}\n"
@@ -190,24 +194,30 @@ async def query_papers(
                             f"Content: {chunk.text[:700]}\n"
                         )
                 
-                reference_nodes = list(seen_papers.keys())
+                reference_nodes = [
+                    PaperReference(
+                        paper_id=paper_id,
+                        title=paper_info['title']
+                    )
+                    for paper_id, paper_info in seen_papers.items()
+                ]
                 context = "\n---\n".join(context_parts)
                 
                 prompt = f"""You are a specialized space biology research assistant. Analyze the scientific papers below and provide a comprehensive summary about "{query_request.query}".
 
-INSTRUCTIONS:
-1. Write 2-3 clear paragraphs synthesizing the key findings
-2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
-3. When citing findings, reference the tittle paper and authors, removing any special characters
-4. Compare and contrast findings across different papers when relevant
-5. Use precise scientific language but remain accessible
-6. Only state what the papers explicitly show - do not speculate beyond their findings
+            INSTRUCTIONS:
+            1. Write 2-3 clear paragraphs synthesizing the key findings
+            2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
+            3. When citing findings, reference the paper ID in brackets like [PMC1234567]
+            4. Compare and contrast findings across different papers when relevant
+            5. Use precise scientific language but remain accessible
+            6. Only state what the papers explicitly show - do not speculate beyond their findings
 
-SCIENTIFIC PAPERS:
-{context}
+            SCIENTIFIC PAPERS:
+            {context}
 
-SUMMARY:"""
-                
+            SUMMARY:"""
+                        
                 model = genai.GenerativeModel('models/gemma-3-12b-it')
                 response = model.generate_content(prompt)
                 content = response.text
