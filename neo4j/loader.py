@@ -1,6 +1,3 @@
-import os
-from dotenv import load_dotenv
-load_dotenv()
 
 import json
 from pathlib import Path
@@ -20,6 +17,13 @@ from llama_index.core.retrievers import VectorIndexRetriever
 from llama_index.core.query_engine import RetrieverQueryEngine
 from llama_index.core.schema import NodeWithScore
 from rank_bm25 import BM25Okapi
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+NEO4J_URL = os.getenv("NEO4J_URL")
+NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
+NEO4J_USER = os.getenv("NEO4J_USER")
 
 def load_processed_papers():
     """Carrega papers processados"""
@@ -113,9 +117,9 @@ def setup_llamaindex(documents):
 
     # ⚡ configure sua conexão Neo4j
     graph_store = Neo4jGraphStore(
-        username="neo4j",
-        password="_iy8z1ClzSEr-yjPNa-f3pfOWYQBjgzuUmdOmFIlyqI",   # altere para sua senha real
-        url="neo4j+s://e8448abc.databases.neo4j.io",  # ou bolt+s:// para Aura
+        username=NEO4J_USER,
+        password=NEO4J_PASSWORD,   # altere para sua senha real
+        url=NEO4J_URL,  # ou bolt+s:// para Aura
         database="neo4j",            # padrão
     )
 
@@ -202,23 +206,18 @@ def setup_llamaindex(documents):
 
     # --- 4. Loop and Insert Each Chunk Individually ---
     print("Processing chunks and building knowledge graph...")
-    cnt = 0
     for i, node in enumerate(nodes):
         try:
             # Call the retry-enabled function for each node
             kg_index.insert_nodes([node])
             print(f"Loaded node #{i}. Nodes left: {len(nodes)-i-1}")
             time.sleep(31)
-            cnt += 1
-            if cnt > 1:
-                break
         except Exception as e:
             # This will only be hit if all retry attempts for a specific node fail
             logging.error(f"Failed to process node #{i}. Aborting. Error: {e}")
             break
 
     logging.info("Knowledge graph built successfully from all chunks!")
-
 
     print("\nKnowledge Graph Index created successfully in Neo4j!")
 
