@@ -22,7 +22,7 @@ from rank_bm25 import BM25Okapi
 class HybridRetriever:
     """Combines BM25 keyword search with vector semantic search"""
     
-    def __init__(self, index, documents, alpha=0.8):
+    def __init__(self, index, documents, alpha=0.85):
         """
         Args:
             index: LlamaIndex VectorStoreIndex
@@ -170,6 +170,10 @@ def create_llamaindex_documents(papers):
     return documents
 
 
+def get_llamaindex(documents):
+    """Pega uma table do banco existente e cria um index"""
+
+
 def setup_llamaindex(documents):
     """Configura e carrega no ChromaDB via LlamaIndex"""
     
@@ -226,7 +230,9 @@ def create_hybrid_query_engine(index, documents, alpha=0.5, use_reranking=True):
     """Creates query engine with BM25 + Vector hybrid retrieval and optional re-ranking"""
     
     print("\nConfiguring hybrid retriever (BM25 + Vector)...")
-    
+
+    rsp = get_response_synthesizer(response_mode=ResponseMode.NO_TEXT)
+
     # Create hybrid retriever
     hybrid_retriever = HybridRetriever(
         index=index,
@@ -245,10 +251,11 @@ def create_hybrid_query_engine(index, documents, alpha=0.5, use_reranking=True):
         
         query_engine = RetrieverQueryEngine(
             retriever=hybrid_retriever,
-            node_postprocessors=[rerank]
+            node_postprocessors=[rerank],
+            response_synthesizer=rsp,
         )
     else:
-        query_engine = RetrieverQueryEngine(retriever=hybrid_retriever)
+        query_engine = RetrieverQueryEngine(retriever=hybrid_retriever, response_synthesizer=rsp)
     
     print("Hybrid query engine configured successfully")
     return query_engine
@@ -268,7 +275,7 @@ def main():
         
         # 2. Create Documents
         documents = create_llamaindex_documents(papers)
-        
+
         if not documents:
             print("ERROR: No valid documents found!")
             return
