@@ -198,7 +198,7 @@ async def query_papers(
 INSTRUCTIONS:
 1. Write 2-3 clear paragraphs synthesizing the key findings
 2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
-3. When citing findings, reference the paper ID in brackets like [PMC1234567]
+3. When citing findings, reference the tittle paper and authors, removing any special characters
 4. Compare and contrast findings across different papers when relevant
 5. Use precise scientific language but remain accessible
 6. Only state what the papers explicitly show - do not speculate beyond their findings
@@ -291,4 +291,4 @@ async def get_paper(
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="1.0.0.0", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
