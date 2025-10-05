@@ -31,6 +31,156 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 NEO4J_USER = os.getenv("NEO4J_USER")
 NEO4J_DATABASE = os.getenv("NEO4J_DATABASE")
 
+import hashlib
+from typing import List, Tuple
+
+def ensure_schema(graph_store):
+    # Neo4j 5 schema DDL (not procedures)
+    with graph_store._driver.session() as session:
+        # 1) Unique ids
+        session.run("""
+        CREATE CONSTRAINT paper_id_unique IF NOT EXISTS
+        FOR (p:Paper) REQUIRE p.paper_id IS UNIQUE
+        """)
+        session.run("""
+        CREATE CONSTRAINT entity_name_unique IF NOT EXISTS
+        FOR (e:Entity) REQUIRE e.name IS UNIQUE
+        """)
+        session.run("""
+        CREATE CONSTRAINT assertion_id_unique IF NOT EXISTS
+        FOR (a:Assertion) REQUIRE a.assertion_id IS UNIQUE
+        """)
+        # 2) Full-text index on Paper.search
+        session.run("""
+        CREATE FULLTEXT INDEX kg_fulltext IF NOT EXISTS
+        FOR (p:Paper) ON EACH [p.search]
+        """)
+        # (Optional) vector index if you add p.embedding later:
+        # session.run("""
+        # CREATE VECTOR INDEX kg_vector IF NOT EXISTS
+        # FOR (p:Paper) ON (p.embedding)
+        # OPTIONS {indexConfig: { `vector.dimensions`: 768, `vector.similarity_function`: 'cosine' }}
+        # """)
+
+        # 3) Quick check
+        rec = session.run("""
+        SHOW INDEXES
+        YIELD name, type, state, entityType, labelsOrTypes, properties
+        WHERE name = 'kg_fulltext'
+        RETURN name, type, state, labelsOrTypes, properties
+        """).single()
+        if rec is None:
+            raise RuntimeError("FULLTEXT index 'kg_fulltext' was not created.")
+    print("Schema ensured (constraints + FULLTEXT index).")
+
+def _assertion_id(paper_id: str, s: str, r: str, o: str) -> str:
+    # deterministic id per (paper_id, s, r, o)
+    raw = f"{paper_id}||{s}||{r}||{o}".encode("utf-8")
+    return hashlib.sha1(raw).hexdigest()
+
+def extract_triplets_with_llm(llm, text: str, max_triplets: int = 50) -> List[Tuple[str, str, str]]:
+    """
+    Use your existing LLM (Gemini) with the same prompt format you already set
+    to extract (subject, relation, object) lines and parse them.
+    """
+    prompt = (
+        "Some text is provided below. Given the text, extract up to "
+        f"{max_triplets} directed knowledge triplets in the form of (subject, relation, object). "
+        "Avoid stopwords.\n"
+        "---------------------\n"
+        f"Text: {text}\n"
+        "---------------------\n"
+        "Triplets:\n"
+    )
+    # Call the model via LlamaIndex LLM wrapper
+    resp = llm.complete(prompt)
+    lines = str(resp).strip().splitlines()
+    triplets = []
+    for ln in lines:
+        ln = ln.strip()
+        if not ln:
+            continue
+        # Expect format: (subject, relation, object)
+        if ln.startswith("(") and ln.endswith(")") and "," in ln:
+            try:
+                body = ln[1:-1]
+                parts = [p.strip() for p in body.split(",", 2)]
+                if len(parts) == 3:
+                    s, r, o = parts
+                    if s and r and o:
+                        triplets.append((s, r, o))
+            except Exception:
+                continue
+    return triplets
+
+def upsert_paper_node(graph_store, md: dict, fallback_text: str = ""):
+    # Minimal paper metadata + search text
+    paper_id = md.get("paper_id") or md.get("id")
+    title = md.get("title", "")
+    abstract = md.get("abstract", "")
+    keywords = md.get("keywords", "")
+    if not abstract and fallback_text:
+        abstract = fallback_text[:4000]
+    cypher = """
+    MERGE (p:Paper {paper_id: $paper_id})
+    SET p.title    = $title,
+        p.abstract = $abstract,
+        p.keywords = $keywords,
+        p.journal  = $journal,
+        p.year     = $year,
+        p.pmc_link = $pmc_link,
+        p.search   = coalesce($title,'') + ' ' + coalesce($abstract,'') + ' ' + coalesce($keywords,'')
+    """
+    params = {
+        "paper_id": paper_id,
+        "title": title,
+        "abstract": abstract,
+        "keywords": keywords,
+        "journal": md.get("journal", ""),
+        "year": md.get("year", ""),
+        "pmc_link": md.get("pmc_link", ""),
+    }
+    with graph_store._driver.session() as session:
+        session.run(cypher, **params)
+    return paper_id
+
+def upsert_assertions(graph_store, paper_id: str, triplets: List[Tuple[str, str, str]], snippet: str = ""):
+    """
+    Upsert Entities, Assertion (with paper_id) and provenance edges:
+      (s:Entity)-[:SUBJECT_OF]->(a:Assertion {assertion_id, paper_id, predicate, snippet?})
+      (o:Entity)-[:OBJECT_OF]->(a)
+      (a)-[:ASSERTED_IN]->(p:Paper {paper_id})
+    """
+    rows = []
+    for (s, r, o) in triplets:
+        aid = _assertion_id(paper_id, s, r, o)
+        rows.append({
+            "aid": aid, "paper_id": paper_id,
+            "s": s, "r": r, "o": o,
+            "snippet": snippet[:500] if snippet else None,
+        })
+    if not rows:
+        return 0
+    cypher = """
+    UNWIND $rows AS row
+    MERGE (p:Paper {paper_id: row.paper_id})
+    MERGE (s:Entity {name: row.s})
+    MERGE (o:Entity {name: row.o})
+    MERGE (a:Assertion {assertion_id: row.aid})
+      ON CREATE SET a.paper_id = row.paper_id,
+                    a.predicate = row.r,
+                    a.snippet = row.snippet
+      ON MATCH  SET a.paper_id = row.paper_id,
+                    a.predicate = row.r
+    MERGE (s)-[:SUBJECT_OF]->(a)
+    MERGE (o)-[:OBJECT_OF]->(a)
+    MERGE (a)-[:ASSERTED_IN]->(p)
+    """
+    with graph_store._driver.session() as session:
+        session.run(cypher, rows=rows)
+    return len(rows)
+
+
 def load_processed_papers():
     """Carrega papers processados"""
     papers_file = Path('../data/processed/all_papers.json')
@@ -75,9 +225,11 @@ def create_llamaindex_documents(papers):
         if not main_text or len(main_text) < 100:
             print(f"WARNING: Skipping paper without sufficient text: {paper.get('id')}")
             continue
+
         metadata = {
             'paper_id': paper.get('id', ''),
             'title': paper.get('title', ''),
+            'abstract': paper.get('abstract', ''),  # <-- add this
             'authors': paper.get('authors', '')[:500],
             'year': paper.get('year', ''),
             'journal': paper.get('journal', '')[:200],
@@ -87,7 +239,7 @@ def create_llamaindex_documents(papers):
             'has_results': bool(paper.get('results')),
             'has_conclusion': bool(paper.get('conclusion'))
         }
-        
+
         doc = Document(
             text=main_text,
             metadata=metadata,
@@ -112,6 +264,9 @@ def setup_llamaindex(documents):
         url=NEO4J_URL, 
         database=NEO4J_DATABASE
     )
+
+    print("\nEnsuring Schema...")
+    ensure_schema(graph_store)
 
     print("\nConfiguring embedding model (optional, for semantic search)...")
 
@@ -163,20 +318,102 @@ def setup_llamaindex(documents):
         include_embeddings=True,
     )
 
-    print("Processing chunks and building knowledge graph...")
-    cnt = 0
-    for i, node in enumerate(nodes):
-        try:
-            print(f"Loading node #{i}...")
-            kg_index.insert_nodes([node])
-            print(f"OK node #{i}. Nodes left: {len(nodes)-i-1}")
+    print("Building provenance per paper...")
+    papers_written = 0
+    triples_written = 0
+
+    # --- replace your block (308..338) with this ---
+
+    from collections import defaultdict
+
+# Map paper_id -> document metadata (for title/abstract/keywords)
+    doc_meta = {}
+    for d in documents:
+        pid = (d.metadata or {}).get("paper_id") or d.doc_id
+        doc_meta[pid] = d.metadata or {}
+
+# Group chunk nodes by paper_id
+    by_paper_nodes = defaultdict(list)
+    for idx, n in enumerate(nodes):
+        # Try to carry paper_id on chunk; fallback to ref_doc_id / document_id
+        pid = None
+        if hasattr(n, "metadata") and n.metadata:
+            pid = n.metadata.get("paper_id") or n.metadata.get("document_id")
+        if not pid:
+            pid = getattr(n, "ref_doc_id", None)
+        if not pid:
+            # last resort: try to read from doc_meta by any hint
+            pid = (n.metadata or {}).get("id") or f"unknown_{idx}"
+        # persist pid on chunk metadata (helps later)
+        if n.metadata is None:
+            n.metadata = {}
+        n.metadata["paper_id"] = pid
+        by_paper_nodes[pid].append(n)
+
+    print(f"Chunk grouping complete: {len(by_paper_nodes)} papers with chunks.")
+
+    papers_written = 0
+    triples_written = 0
+
+    for i, (paper_id, chunk_list) in enumerate(by_paper_nodes.items(), start=1):
+        # Upsert the Paper node once using document-level metadata, with fallback text
+        md0 = doc_meta.get(paper_id, {})
+        title = md0.get("title", "")
+        abstract = md0.get("abstract", "")
+        keywords = md0.get("keywords", "")
+        fallback_text = (title + "\n" + abstract + "\n" + keywords).strip()
+        upsert_paper_node(graph_store, md0, fallback_text=fallback_text)
+
+        # Accumulate unique (s,r,o) for this paper (dedupe across chunks)
+        seen = set()
+        batch_triplets = []
+        CHUNK_MAX_TRIPLETS = 100  # per chunk cap to keep costs under control
+
+        for cidx, node in enumerate(chunk_list, start=1):
+            # get chunk text; LlamaIndex Node supports get_content(); fall back to .text
+            try:
+                chunk_text = node.get_content()  # preferred
+            except Exception:
+                chunk_text = getattr(node, "text", "") or ""
+
+            if not chunk_text:
+                continue
+
+            # extract triplets from *this chunk*
+            triplets = extract_triplets_with_llm(llm, chunk_text, max_triplets=CHUNK_MAX_TRIPLETS)
+
+            # collect unique triplets for this paper
+            for (s, r, o) in triplets:
+                key = (s, r, o)
+                if key in seen:
+                    continue
+                seen.add(key)
+                batch_triplets.append((s, r, o, chunk_text[:500]))  # keep a short snippet
             time.sleep(31)
-            cnt += 1
-            if cnt >= 2:
-                break
-        except Exception as e:
-            logging.error(f"Failed to process node #{i}. Aborting. Error: {e}")
-            break
+
+        # Upsert assertions for this paper in manageable batches
+        BATCH = 200
+        wrote_for_paper = 0
+        for start in range(0, len(batch_triplets), BATCH):
+            slice_triplets = batch_triplets[start:start+BATCH]
+            # adapt to upsert_assertions API (expects List[Tuple[str,str,str]] + snippet param)
+            # We want per-triple snippets; quick adaptation: call per triple (safe) or extend API.
+            # To keep it simple & fast: single snippet per batch from the paper abstract/title.
+            # If you want strict per-triple snippet, loop per item and call upsert_assertions one by one.
+            batch_snippet = (abstract or title)[:500]
+            wrote_for_paper += upsert_assertions(
+                graph_store,
+                paper_id,
+                [(s, r, o) for (s, r, o, _) in slice_triplets],
+                snippet=batch_snippet
+            )
+
+        papers_written += 1
+        triples_written += wrote_for_paper
+        print(f"  ... processed paper {i}/{len(by_paper_nodes)} | chunks={len(chunk_list)} | assertions+provenance={wrote_for_paper} | total={triples_written}")
+
+    print(f"Provenance build complete. Papers: {papers_written}, Assertions: {triples_written}")
+
 
     logging.info("Knowledge graph built successfully from all chunks!")
 
@@ -251,7 +488,7 @@ def main():
         print(f"Total relationships in Neo4j: {edge_count}")
 
         # 5. Test queries
-#test_queries(index, documents)
+        test_queries(index, documents)
 
         print("\n" + "=" * 70)
         print("PROCESS COMPLETED SUCCESSFULLY!")
@@ -262,8 +499,6 @@ def main():
         print(f"Relationships: {edge_count}")
         print("\nGraph search system ready!")
         print("=" * 70)
-
-        visualize(index)
 
     except Exception as e:
         print(f"\nERROR: {e}")
