@@ -81,13 +81,9 @@ class SummarizeRequest(BaseModel):
     query: str
     chunks: List[ChunkResult]
 
-class SummarizeResponse(BaseModel):
-    query: str
-    summary: str
-    paper_ids: List[str]
-    sources_count: int
-    timestamp: str
-
+class QueryResponse(BaseModel):
+    content: str
+    referenceNodes: List[str]
 
 # Helper function for app identification
 def verify_app_id(x_app_id: Optional[str] = Header(None)):
@@ -137,50 +133,28 @@ async def health_check():
         )
 
 @app.post("/query", response_model=QueryResponse)
-@limiter.limit("20/minute")  # 20 queries per minute per IP
+@limiter.limit("20/minute")
 async def query_papers(
     request: Request,
     query_request: QueryRequest,
     x_app_id: str = Header(None)
 ):
-    """
-    Query papers by semantic search
-    
-    Rate limit: 20 requests per minute per IP address
-    Requires: X-App-Id header
-    
-    Args:
-        query: Search query text (min 3 characters)
-        top_k: Number of results (default: 10, max: 50)
-    """
-    
-    # Verify app identifier
+    """Query papers and generate AI summary"""
     verify_app_id(x_app_id)
     
-    # Validate input
     if not query_request.query or len(query_request.query.strip()) < 3:
-        raise HTTPException(
-            status_code=400,
-            detail="Query must be at least 3 characters"
-        )
+        raise HTTPException(status_code=400, detail="Query must be at least 3 characters")
     
     if query_request.top_k > 50:
-        raise HTTPException(
-            status_code=400,
-            detail="top_k cannot exceed 50"
-        )
+        raise HTTPException(status_code=400, detail="top_k cannot exceed 50")
     
     if query_request.top_k < 1:
-        raise HTTPException(
-            status_code=400,
-            detail="top_k must be at least 1"
-        )
+        raise HTTPException(status_code=400, detail="top_k must be at least 1")
     
-    # Log query
     logger.info(f"Query: '{query_request.query}' (top_k={query_request.top_k})")
     
     try:
-        # Forward to database API
+        # Get results from database
         async with httpx.AsyncClient() as client:
             response = await client.post(
                 f"{DATABASE_API_URL}/query",
@@ -190,32 +164,79 @@ async def query_papers(
             response.raise_for_status()
             result = response.json()
         
-        # Add timestamp
-        result['timestamp'] = datetime.utcnow().isoformat()
+        chunks = [ChunkResult(**chunk) for chunk in result['chunks']]
         
-        logger.info(f"Query successful: {result['total_results']} results")
-        return result
+        # Generate AI summary
+        content = ""
+        reference_nodes = []
+        
+        if GEMINI_API_KEY and chunks:
+            try:
+                context_parts = []
+                seen_papers = {}
+                
+                for chunk in chunks[:10]:
+                    meta = chunk.metadata
+                    paper_id = meta.get('paper_id', '')
+                    
+                    if paper_id and paper_id not in seen_papers:
+                        seen_papers[paper_id] = True
+                        
+                        context_parts.append(
+                            f"[{paper_id}] {meta.get('title', 'Unknown')}\n"
+                            f"Authors: {meta.get('authors', 'Unknown')}\n"
+                            f"Year: {meta.get('year', 'Unknown')}\n"
+                            f"Journal: {meta.get('journal', 'Unknown')}\n"
+                            f"Content: {chunk.text[:700]}\n"
+                        )
+                
+                reference_nodes = list(seen_papers.keys())
+                context = "\n---\n".join(context_parts)
+                
+                prompt = f"""You are a specialized space biology research assistant. Analyze the scientific papers below and provide a comprehensive summary about "{query_request.query}".
+
+INSTRUCTIONS:
+1. Write 2-3 clear paragraphs synthesizing the key findings
+2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
+3. When citing findings, reference the paper ID in brackets like [PMC1234567]
+4. Compare and contrast findings across different papers when relevant
+5. Use precise scientific language but remain accessible
+6. Only state what the papers explicitly show - do not speculate beyond their findings
+
+SCIENTIFIC PAPERS:
+{context}
+
+SUMMARY:"""
+                
+                model = genai.GenerativeModel('models/gemma-3-12b-it')
+                response = model.generate_content(prompt)
+                content = response.text
+                
+                logger.info(f"Generated summary with {len(reference_nodes)} papers")
+                
+            except Exception as e:
+                logger.error(f"AI summarization failed: {e}")
+                content = f"Search completed successfully but AI summary generation failed. Found {len(chunks)} results."
+        else:
+            content = f"Found {len(chunks)} results. AI summarization not available."
+        
+        return QueryResponse(
+            content=content,
+            referenceNodes=reference_nodes
+        )
     
     except httpx.TimeoutException:
         logger.error("Database API timeout")
-        raise HTTPException(
-            status_code=504,
-            detail="Database query timeout - please try again"
-        )
+        raise HTTPException(status_code=504, detail="Database query timeout")
     
     except httpx.HTTPStatusError as e:
         logger.error(f"Database API error: {e}")
-        raise HTTPException(
-            status_code=e.response.status_code,
-            detail=f"Database error: {e.response.text}"
-        )
+        raise HTTPException(status_code=e.response.status_code, detail=f"Database error")
     
     except Exception as e:
         logger.error(f"Unexpected error: {e}")
-        raise HTTPException(
-            status_code=500,
-            detail="Internal server error"
-        )
+        raise HTTPException(status_code=500, detail="Internal server error")
+
 
 @app.get("/stats")
 @limiter.limit("10/minute")  # Lower limit for stats
@@ -267,91 +288,6 @@ async def get_paper(
         logger.error(f"Get paper failed: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve paper")
 
-@app.post("/summarize", response_model=SummarizeResponse)
-@limiter.limit("10/minute")  # Lower limit since it calls LLM
-async def summarize_results(
-    request: Request,
-    summarize_request: SummarizeRequest,
-    x_app_id: str = Header(None)
-):
-    """
-    Generate AI summary from query results
-    
-    Rate limit: 10 requests per minute per IP
-    Requires: X-App-Id header and GEMINI_API_KEY configured
-    """
-    verify_app_id(x_app_id)
-    
-    if not GEMINI_API_KEY:
-        raise HTTPException(
-            status_code=503,
-            detail="AI summarization not configured"
-        )
-    
-    try:
-        # Build context from chunks
-        context_parts = []
-        seen_papers = set()
-        
-        for chunk in summarize_request.chunks[:10]:  # Limit to 10 chunks
-            meta = chunk.metadata
-            paper_id = meta.get('paper_id', '')
-            
-            if paper_id and paper_id not in seen_papers:
-                seen_papers.add(paper_id)
-                
-                context_parts.append(
-                    f"Paper: {meta.get('title', 'Unknown')}\n"
-                    f"Authors: {meta.get('authors', 'Unknown')}\n"
-                    f"Year: {meta.get('year', 'Unknown')}\n"
-                    f"Journal: {meta.get('journal', 'Unknown')}\n"
-                    f"Content: {chunk.text[:800]}...\n"
-                )
-        
-        if not context_parts:
-            raise HTTPException(
-                status_code=400,
-                detail="No valid papers to summarize"
-            )
-        
-        context = "\n---\n".join(context_parts)
-        
-        prompt = f"""You are a specialized space biology research assistant. Analyze the scientific papers below and provide a comprehensive summary about "{summarize_request.query}".
-
-        INSTRUCTIONS:
-        1. Write 2-3 clear paragraphs synthesizing the key findings
-        2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
-        3. When citing findings, reference the paper ID in brackets like [PMC1234567]
-        4. Compare and contrast findings across different papers when relevant
-        5. Use precise scientific language but remain accessible
-        6. Only state what the papers explicitly show - do not speculate beyond their findings
-
-        SCIENTIFIC PAPERS:
-        {context}
-
-        SUMMARY:"""
-
-        # Call Gemini with Gemma 3-12b
-        model = genai.GenerativeModel('models/gemma-3-12b-it')
-        response = model.generate_content(prompt)
-        summary = response.text
-
-        logger.info(f"Generated summary for: {summarize_request.query}")
-
-        return SummarizeResponse(
-                query=summarize_request.query,
-                summary=summary,
-                paper_ids=list(seen_papers.keys()),
-                sources_count=len(seen_papers),
-                timestamp=datetime.utcnow().isoformat()
-                )
-
-    except Exception as e:
-        logger.error(f"Summarization failed: {e}")
-        raise HTTPException(
-                status_code=500,
-                detail=f"Summarization failed: {str(e)}"
-                )
 
 if __name__ == "__main__":
     import uvicorn
