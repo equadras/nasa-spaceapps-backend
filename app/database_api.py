@@ -13,7 +13,7 @@ from rank_bm25 import BM25Okapi
 
 load_dotenv()
 
-DATABASE_PATH = os.getenv("DATABASE_PATH", "database/chroma_db")
+DATABASE_PATH = os.getenv("DATABASE_PATH", "../database/chroma_db")
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "sentence-transformers/all-mpnet-base-v2")
 ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:8000").split(",")
 
@@ -270,4 +270,4 @@ async def get_paper(paper_id: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+    uvicorn.run(app, host="127.0.0.1", port=8001)
