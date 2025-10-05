@@ -170,10 +170,6 @@ def create_llamaindex_documents(papers):
     return documents
 
 
-def get_llamaindex(documents):
-    """Pega uma table do banco existente e cria um index"""
-
-
 def setup_llamaindex(documents):
     """Configura e carrega no ChromaDB via LlamaIndex"""
     
@@ -201,7 +197,8 @@ def setup_llamaindex(documents):
     print("\nConfiguring embedding model...")
     
     embed_model = HuggingFaceEmbedding(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_name="sentence-transformers/all-mpnet-base-v2",
+        # model_name="sentence-transformers/all-MiniLM-L6-v2",
         device="cpu"
     )
     

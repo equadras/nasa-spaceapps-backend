@@ -12,7 +12,7 @@ import numpy as np
 from rank_bm25 import BM25Okapi
 
 class HybridPaperQueryEngine:
-    def __init__(self, alpha=0.5, similarity_threshold=0.3):
+    def __init__(self, alpha=0.80, similarity_threshold=0.3):
         """
         Initialize hybrid search engine with threshold filtering
         
@@ -41,7 +41,8 @@ class HybridPaperQueryEngine:
         
         # Embedding model
         print("Loading embedding model...")
-        self.model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+        self.model = SentenceTransformer("sentence-transformers/all-mpnet-base-v2")
+        # self.model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
         
         # Build BM25 index
         print("Building BM25 index...")
