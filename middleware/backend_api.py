@@ -15,14 +15,20 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import google.generativeai as genai
 
-if GEMINI_API_KEY:
-    genai.configure(api_key=GEMINI_API_KEY)
 
 load_dotenv()
 
 DATABASE_API_URL = os.getenv("DATABASE_API_URL")
 FRONTEND_KEY = os.getenv("FRONTEND_KEY", "nasa-bioscience-public-v1")
 FRONTEND_URLS = os.getenv("FRONTEND_URLS", "http://localhost:3000").split(",")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+
+if GEMINI_API_KEY:
+    genai.configure(api_key=GEMINI_API_KEY)
+
+ 
+#for model in genai.list_models():
+#print(model.name)
 
 # Validate required config
 if not DATABASE_API_URL:
@@ -78,6 +84,7 @@ class SummarizeRequest(BaseModel):
 class SummarizeResponse(BaseModel):
     query: str
     summary: str
+    paper_ids: List[str]
     sources_count: int
     timestamp: str
 
@@ -309,43 +316,43 @@ async def summarize_results(
         
         context = "\n---\n".join(context_parts)
         
-        # Create prompt
-        prompt = f"""You are a specialized biological space research assistant. Based on the query "{summarize_request.query}", provide a comprehensive summary (2-3 paragraphs) synthesizing the key findings from the scientific papers below.
+        prompt = f"""You are a specialized space biology research assistant. Analyze the scientific papers below and provide a comprehensive summary about "{summarize_request.query}".
 
-Focus on:
-- Main findings related to the query
-- Common themes across papers
-- Specific effects, mechanisms, or observations mentioned
-- Year of research when relevant
+        INSTRUCTIONS:
+        1. Write 2-3 clear paragraphs synthesizing the key findings
+        2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
+        3. When citing findings, reference the paper ID in brackets like [PMC1234567]
+        4. Compare and contrast findings across different papers when relevant
+        5. Use precise scientific language but remain accessible
+        6. Only state what the papers explicitly show - do not speculate beyond their findings
 
-Write in clear, accessible scientific language. Do not make claims beyond what the papers state.
+        SCIENTIFIC PAPERS:
+        {context}
 
-Scientific Papers:
-{context}
+        SUMMARY:"""
 
-Summary:"""
-        
-        # Call Gemini
-        model = genai.GenerativeModel('models/gemma-3n')
+        # Call Gemini with Gemma 3-12b
+        model = genai.GenerativeModel('models/gemma-3-12b-it')
         response = model.generate_content(prompt)
         summary = response.text
-        
+
         logger.info(f"Generated summary for: {summarize_request.query}")
-        
+
         return SummarizeResponse(
-            query=summarize_request.query,
-            summary=summary,
-            sources_count=len(seen_papers),
-            timestamp=datetime.utcnow().isoformat()
-        )
-    
+                query=summarize_request.query,
+                summary=summary,
+                paper_ids=list(seen_papers.keys()),
+                sources_count=len(seen_papers),
+                timestamp=datetime.utcnow().isoformat()
+                )
+
     except Exception as e:
         logger.error(f"Summarization failed: {e}")
         raise HTTPException(
-            status_code=500,
-            detail=f"Summarization failed: {str(e)}"
-        )
+                status_code=500,
+                detail=f"Summarization failed: {str(e)}"
+                )
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="1.0.0.0", port=8000)
