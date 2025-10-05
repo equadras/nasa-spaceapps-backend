@@ -1,5 +1,9 @@
-
 import json
+import os
+import traceback
+import time
+import logging
+import sys
 from pathlib import Path
 from tqdm import tqdm
 import numpy as np
@@ -8,22 +12,24 @@ from llama_index.core import (
     Document,
     VectorStoreIndex,
     StorageContext,
+    KnowledgeGraphIndex,
+    PromptTemplate,
     Settings
 )
-from llama_index.vector_stores.chroma import ChromaVectorStore
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
-from llama_index.core.postprocessor import SentenceTransformerRerank
-from llama_index.core.retrievers import VectorIndexRetriever
-from llama_index.core.query_engine import RetrieverQueryEngine
+from llama_index.core.node_parser import SimpleNodeParser
 from llama_index.core.schema import NodeWithScore
+from llama_index.core.query_engine import RetrieverQueryEngine
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.graph_stores.neo4j import Neo4jGraphStore
 from rank_bm25 import BM25Okapi
-import os
+from pyvis.network import Network
 from dotenv import load_dotenv
 load_dotenv()
 
 NEO4J_URL = os.getenv("NEO4J_URL")
 NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 NEO4J_USER = os.getenv("NEO4J_USER")
+NEO4J_DATABASE = os.getenv("NEO4J_DATABASE")
 
 def load_processed_papers():
     """Carrega papers processados"""
@@ -47,38 +53,28 @@ def create_llamaindex_documents(papers):
     
     for paper in tqdm(papers):
         text_parts = []
-        
         if paper.get('title'):
             text_parts.append(f"Title: {paper['title']}\n")
-        
         if paper.get('abstract'):
             text_parts.append(f"Abstract: {paper['abstract']}\n")
-        
         if paper.get('introduction'):
             text_parts.append(f"Introduction: {paper['introduction']}\n")
-        
         if paper.get('methods'):
             text_parts.append(f"Methods: {paper['methods']}\n")
-        
         if paper.get('results'):
             text_parts.append(f"Results: {paper['results']}\n")
-        
         if paper.get('discussion'):
             text_parts.append(f"Discussion: {paper['discussion']}\n")
-        
         if paper.get('conclusion'):
             text_parts.append(f"Conclusion: {paper['conclusion']}\n")
-        
         if not any([paper.get('abstract'), paper.get('results'), paper.get('conclusion')]):
             if paper.get('full_text'):
                 text_parts.append(paper['full_text'])
-        
         main_text = '\n'.join(text_parts).strip()
         
         if not main_text or len(main_text) < 100:
             print(f"WARNING: Skipping paper without sufficient text: {paper.get('id')}")
             continue
-        
         metadata = {
             'paper_id': paper.get('id', ''),
             'title': paper.get('title', ''),
@@ -103,11 +99,6 @@ def create_llamaindex_documents(papers):
     print(f"SUCCESS: {len(documents)} documents created")
     return documents
 
-from pathlib import Path
-from llama_index.core import Settings
-from llama_index.core import KnowledgeGraphIndex
-from llama_index.graph_stores.neo4j import Neo4jGraphStore
-from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 
 
 def setup_llamaindex(documents):
@@ -115,18 +106,12 @@ def setup_llamaindex(documents):
 
     print("\nConfiguring Neo4j GraphStore...")
 
-    # ⚡ configure sua conexão Neo4j
     graph_store = Neo4jGraphStore(
         username=NEO4J_USER,
-        password=NEO4J_PASSWORD,   # altere para sua senha real
-        url=NEO4J_URL,  # ou bolt+s:// para Aura
-        database="neo4j",            # padrão
+        password=NEO4J_PASSWORD,
+        url=NEO4J_URL, 
+        database=NEO4J_DATABASE
     )
-
-    # a quick write-read cycle
-    graph_store.query("MERGE (:__Test {k:'ok'})")
-    rec = graph_store.query("MATCH (n:__Test {k:'ok'}) RETURN count(n) AS c")
-    print(f"Neo4j write smoke test count = {rec[0]['c']}")
 
     print("\nConfiguring embedding model (optional, for semantic search)...")
 
@@ -139,10 +124,7 @@ def setup_llamaindex(documents):
     Settings.chunk_size = 512
 
     llm = GoogleGenAI(
-        model="gemini-2.5-pro",
-        # Tenacity is used by default for retries
-        max_retries=5,
-        timeout=60.0,
+        model="gemini-2.5-pro"
     )
 
     # Define settings globais
@@ -151,28 +133,15 @@ def setup_llamaindex(documents):
     Settings.chunk_size = 512 
     Settings.chunk_overlap = 10
 
-    print("\nLoading documents into KnowledgeGraphIndex (Neo4j)...")
-    print("This may take several minutes depending on hardware...\n")
+    print("\nCreating Document chunks...");
 
-    # Cria grafo e index
-    from llama_index.core import (
-        Document,
-        KnowledgeGraphIndex,
-        PromptTemplate
-    )
-    from llama_index.core.node_parser import SimpleNodeParser
-    from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
-    import time
-    import logging
-
-    # --- 2. Manually Create Chunks (Nodes) ---
     # This is the step that from_documents() usually does automatically
     parser = SimpleNodeParser.from_defaults(chunk_size=16384, chunk_overlap=20)
     nodes = parser.get_nodes_from_documents(documents)
     print(f"Document split into {len(nodes)} chunks.")
 
 
-    # Define your custom prompt template string
+    # Custom prompt template string
     prompt_str = (
         "Some text is provided below. Given the text, extract up to "
         "{max_knowledge_triplets} directed knowledge triplets in the form of (subject, relation, object). "
@@ -182,38 +151,26 @@ def setup_llamaindex(documents):
         "---------------------\n"
         "Triplets:\n"
     )
-
-    # Create a LlamaIndex PromptTemplate object
     my_custom_prompt = PromptTemplate(prompt_str)
 
-    # --- 3. Create an Empty Knowledge Graph Index ---
-
     storage_context = StorageContext.from_defaults(graph_store=graph_store)
-
     # Criar o índice do grafo
     kg_index = KnowledgeGraphIndex(
         nodes=[],  # Start with no nodes
         kg_triplet_extract_template=my_custom_prompt,
         storage_context=storage_context,
         max_triplets_per_chunk=100,
-        #space_name=space_name,
-        #edge_types=edge_types,
-        #rel_prop_names=rel_prop_names,
-        #tags=tags,
         include_embeddings=True,
-        show_progress=True,
     )
 
-    # --- 4. Loop and Insert Each Chunk Individually ---
     print("Processing chunks and building knowledge graph...")
     for i, node in enumerate(nodes):
         try:
-            # Call the retry-enabled function for each node
+            print(f"Loading node #{i}...")
             kg_index.insert_nodes([node])
-            print(f"Loaded node #{i}. Nodes left: {len(nodes)-i-1}")
+            print(f"OK node #{i}. Nodes left: {len(nodes)-i-1}")
             time.sleep(31)
         except Exception as e:
-            # This will only be hit if all retry attempts for a specific node fail
             logging.error(f"Failed to process node #{i}. Aborting. Error: {e}")
             break
 
@@ -225,32 +182,25 @@ def setup_llamaindex(documents):
 
 
 def visualize(kg_index):
-    from pyvis.network import Network
-    import logging
-    import sys
-
-    # --- Visualization Code ---
-    # 1. Get the graph as a networkx object
+    # networkx object
     g = kg_index.get_networkx_graph()
 
-    # 2. Create a pyvis network object
-    #    `notebook=True` is great for Jupyter/Colab environments.
-    #    `cdn_resources='in_line'` makes the HTML file self-contained.
-    net = Network(notebook=True, cdn_resources="in_line", directed=True, height="750px", width="100%")
+    # pyvis network object
+    net = Network(cdn_resources="in_line", directed=True, height="750px", width="100%")
 
-    # 3. Load the networkx graph into pyvis
+    # Load the networkx graph into pyvis
     net.from_nx(g)
 
-    # 4. Add physics-based stabilization for a better layout
+    # Physics-based stabilization for a better layout
     net.show_buttons(filter_=['physics'])
 
-    # 5. Generate the interactive HTML file
+    # Interactive HTML file
     net.show("graph.html")
     print("Successfully generated interactive graph visualization: graph.html")
 
 
 def test_queries(index, documents):
-    """Executa algumas queries de teste no KnowledgeGraphIndex (Neo4j)"""
+    """Executes test queries on Neo4j"""
     query_engine = index.as_query_engine()
 
     queries = [
@@ -309,11 +259,10 @@ def main():
         print("\nGraph search system ready!")
         print("=" * 70)
 
-        visualize(index)  # se você já tiver uma função para desenhar
+        visualize(index)
 
     except Exception as e:
         print(f"\nERROR: {e}")
-        import traceback
         traceback.print_exc()
 
 if __name__ == "__main__":
