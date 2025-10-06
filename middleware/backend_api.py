@@ -3,6 +3,7 @@ Backend API - Public API with rate limiting and app identification
 """
 from fastapi import FastAPI, HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 from typing import List, Optional
 import httpx
@@ -13,6 +14,7 @@ from dotenv import load_dotenv
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from pathlib import Path
 import google.generativeai as genai
 
 
@@ -208,7 +210,7 @@ async def query_papers(
             INSTRUCTIONS:
             1. Write 2-3 clear paragraphs synthesizing the key findings
             2. Focus on: main discoveries, biological mechanisms, experimental methods, and implications
-            3. When citing findings, reference the paper ID in brackets like [PMC1234567]
+            3. When citing findings, reference the tittle paper and authors, removing any special characters
             4. Compare and contrast findings across different papers when relevant
             5. Use precise scientific language but remain accessible
             6. Only state what the papers explicitly show - do not speculate beyond their findings
@@ -298,6 +300,26 @@ async def get_paper(
         logger.error(f"Get paper failed: {e}")
         raise HTTPException(status_code=500, detail="Failed to retrieve paper")
 
+
+
+@app.get("/graph_html", response_class=HTMLResponse)
+async def get_graph():
+    """Return knowledge graph visualization as HTML"""
+    try:
+        # Path to your generated graph.html
+        graph_path = Path("../knowledge_graph_viewer_inline.html")
+
+        if not graph_path.exists():
+            raise HTTPException(status_code=404, detail="Graph not generated yet")
+
+        # Read and return the HTML content
+        with open(graph_path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+
+        return html_content
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
